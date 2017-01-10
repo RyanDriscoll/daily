@@ -1,0 +1,10 @@
+.navbar-brand {
+  padding: 0px;
+  font-size: 25px;
+  width: 250px;
+}
+
+.navbar-brand > img {
+  height: 50px;
+  display: inline-block;
+}
