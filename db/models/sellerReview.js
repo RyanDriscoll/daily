@@ -3,9 +3,9 @@
 const Sequelize = require('sequelize');
 const db = require('APP/db');
 
-const Review = db.define('reviews', {
+const SellerReview = db.define('seller_reviews', {
   stars: Sequelize.RANGE,
-
+  text: Sequelize.TEXT
   });
 
-module.exports = Review;
+module.exports = SellerReview;

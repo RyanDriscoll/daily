@@ -8,18 +8,15 @@ const User = require('./user')
 const Product = require('./product')
 const Category = require('./category')
 const Reservation = require('./reservation')
+const SellerReview = require('./sellerReview')
+const RenterReview = require('./renterReview')
 
-// User.hasMany(Product);
 Product.belongsTo(User, {as: 'seller'});
-
 Product.belongsTo(Category);
 Category.hasMany(Product);
-
 Product.hasMany(Reservation);
 Reservation.belongsTo(User);
-// Reservation.belongsToMany(Product, {through: 'product_reservation'});
+SellerReview.belongsTo(Reservation);
+RenterReview.belongsTo(Reservation);
 
-
-
-
-module.exports = {User, Product, Category, Reservation}
+module.exports = {User, Product, Category, Reservation, SellerReview, RenterReview}
