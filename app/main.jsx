@@ -8,6 +8,7 @@ import store from './store'
 import Jokes from './components/Jokes'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
+import Signup from './components/Signup.jsx'
 
 const ExampleApp = connect(
   ({ auth }) => ({ user: auth })
@@ -26,7 +27,7 @@ render (
     <Router history={browserHistory}>
       <Route path="/" component={ExampleApp}>
         <IndexRedirect to="/jokes" />
-        <Route path="/jokes" component={Jokes} />
+        <Route path="/jokes" component={Signup} />
       </Route>
     </Router>
   </Provider>,
