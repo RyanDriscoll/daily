@@ -11,7 +11,8 @@ const Product = db.define('products', {
   state: Sequelize.STRING,
   zip: Sequelize.STRING,
   price: Sequelize.DECIMAL,
-  end_date: Sequelize.DATEONLY
+  end_date: Sequelize.DATEONLY,
+  img_url: Sequelize.STRING
   });
 
 module.exports = Product;
