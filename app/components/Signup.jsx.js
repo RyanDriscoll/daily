@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-
 import {signup} from 'APP/app/reducers/user';
-
-// import {addLatLongToDb, validateAddress} from '../../actions/addressDetails'
 
 class Signup extends Component{
     constructor(props){
@@ -26,9 +23,6 @@ class Signup extends Component{
     }
 
     render(){
-        // return (<Signup allInterests={this.props.allInterests} handleInputChange={this.handleInputChange} signUpUser={this.signUpUser} {...this.state} handleAddress={this.handleAddress}/>)
-        // import React, { Component } from 'react';
-        // import InterestOptions from './InterestOptions';
             return (
                 <div>
                     <h3>Welcome to Daily! </h3>
@@ -79,19 +73,12 @@ class Signup extends Component{
 
     signUpUser(e){
         e.preventDefault();
-        // console.log('...........this.state.interests', this.state.interests)
         const user = {
             firstName: e.target.firstName.value,
             lastName: e.target.lastName.value,
             email: e.target.email.value,
             password_digest: e.target.password_digest.value
         }
-
-        // Promise.all([
-        //     this.props.addUToDb(user)
-        // ]).then(() => {
-        //     this.props.router.push('/');
-        // });
 
         this.props.signup(user);
 
@@ -107,11 +94,7 @@ class Signup extends Component{
 
 
 const mapStateToProps = (state, ownProps) => {
-    // console.log('-----------> Signup Container state', state)
-    return {
-        // currentView: state.currentView,
-        // allInterests: state.interests.allInterests
-    };
+    return {};
 }
 
 
