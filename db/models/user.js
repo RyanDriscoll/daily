@@ -23,11 +23,11 @@ const User = db.define('users', {
     defaultValue: false
   }
 }, {
-	indexes: [{fields: ['email'], unique: true,}],
-  hooks: {
-    beforeCreate: setEmailAndPassword,
-    beforeUpdate: setEmailAndPassword,
-  },
+	// indexes: [{fields: ['email'], unique: false,}],
+  // hooks: {
+  //   beforeCreate: setEmailAndPassword,
+  //   beforeUpdate: setEmailAndPassword,
+  // },
   instanceMethods: {
     authenticate(plaintext) {
       return new Promise((resolve, reject) =>
