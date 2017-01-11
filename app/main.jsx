@@ -9,6 +9,7 @@ import Login from './components/Login.jsx'
 import WhoAmI from './components/WhoAmI'
 import Navbar from './components/Navbar'
 import Signup from './components/Signup.jsx'
+import UserProfile from './components/UserProfile.jsx'
 
 const ExampleApp = connect(
   ({ auth }) => ({ user: auth })
@@ -26,7 +27,9 @@ render (
     {/*<Router history={hashHistory}>*/}
       <Route path="/" component={ExampleApp}>
         <Route path="signup" component={Signup}/>
+        <Route path="userProfile/:id" component={UserProfile}/>
         <Route path="login" component={Login}/>
+
         {/*<IndexRedirect to="/products" />*/}
       </Route>
     </Router>
