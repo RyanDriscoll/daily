@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
 import Login from '../components/Login'
 import WhoAmI from '../components/WhoAmI'
+import {Link} from 'react-router'
+
 
 export default (props) => {
   return (

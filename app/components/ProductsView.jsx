@@ -4,7 +4,7 @@ import {Link} from 'react-router'
 
 
 
-
+/*-----products component-----*/
 export const ProductsView = (props) => {
 
   const products = props.allProducts
@@ -35,6 +35,8 @@ export const ProductsView = (props) => {
 )
 }
 
+
+/*-----products container-----*/
 import {connect} from 'react-redux'
 import {getProducts} from '../reducers/products'
 
@@ -51,9 +53,5 @@ const mapDispatchToProps = (dispatch, ownProps) =>{
     addProducts: (dispatch=>(dispatch(getProducts())))
     }
   }
-
-
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductsView)

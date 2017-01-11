@@ -5,6 +5,7 @@ const initialState = {
 }
 const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS'
 
+/*-----action-creator-----*/
 export const receiveProducts = (products) =>{
   return {
     type: RECEIVE_PRODUCTS,
@@ -13,6 +14,7 @@ export const receiveProducts = (products) =>{
 }
 
 
+/*-----gets all products-----*/
 export const getProducts = () =>dispatch=>{
   axios.get('/api/products')
       .then(response => {
@@ -28,7 +30,7 @@ export const getProducts = () =>dispatch=>{
 }
 
 
-
+/*-----products reducer-----*/
 export default function(state = initialState, action) {
   console.log("PRODUCT ACTION", action.type )
     let newState = Object.assign({}, state)

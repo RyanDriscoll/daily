@@ -16,8 +16,13 @@ Product.belongsTo(User, {as: 'seller'});
 Category.hasMany(Product);
 
 Product.hasMany(Reservation);
+Reservation.belongsTo(Product);
+
 Reservation.belongsTo(User);
+
 SellerReview.belongsTo(Reservation);
 RenterReview.belongsTo(Reservation);
+Reservation.hasOne(SellerReview);
+Reservation.hasOne(RenterReview);
 
 module.exports = {User, Product, Category, Reservation, SellerReview, RenterReview}
