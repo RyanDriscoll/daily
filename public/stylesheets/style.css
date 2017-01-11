@@ -1,0 +1,25 @@
+.navbar-brand {
+  padding: 0px;
+  font-size: 25px;
+  width: 250px;
+}
+
+.navbar-brand > img {
+  height: 50px;
+  display: inline-block;
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+.navbar-brand > span {
+  font-size: 45px;
+  vertical-align: middle;
+}
+
+.navbar-nav {
+  float: right;
+}
+
+.glyphicon {
+  font-size: 20px;
+}
