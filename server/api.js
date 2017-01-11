@@ -9,6 +9,12 @@ api
   .use('/users', require('./users'))
   .use('/categories', require('./categories'))
 
+
+  .use('/products', require('./products'))
+
+  .use('/userProfile', require('./userProfile'))
+
+
 // Send along any errors
 api.use((err, req, res, next) => {
   res.status(500).send(err)
