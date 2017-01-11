@@ -24,6 +24,23 @@
   font-size: 20px;
 }
 
+.sidebar-title {
+  padding-top: 50px;
+  color: #9d9d9d;
+}
+
+sidebar {
+  position: fixed;
+  left: 0;
+  top: 50px;
+  padding: 0 !important;
+  background: #303030;
+  height: calc(100vh - 50px);
+  width: inherit;
+  overflow-y: auto;
+  border-right: 2px solid #555;
+  text-align: center;
+}
 
 .main {
   padding-top: 75px;

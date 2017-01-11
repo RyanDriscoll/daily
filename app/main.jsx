@@ -8,7 +8,8 @@ import store from './store'
 import Login from './components/Login.jsx'
 import WhoAmI from './components/WhoAmI'
 import Navbar from './components/Navbar'
-import Signup from './components/Signup.jsx'
+import Signup from './components/Signup'
+import Sidebar from './components/Sidebar'
 
 import ProductsView from './components/ProductsView'
 import {getProducts} from './reducers/products'
@@ -21,6 +22,7 @@ const ExampleApp = connect(
   ({ user, children }) =>
     <div>
       <Navbar user={user} />
+      <Sidebar />
       {children}
     </div>
 )
