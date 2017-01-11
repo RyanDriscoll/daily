@@ -97,6 +97,7 @@ passport.deserializeUser(
 
 passport.use(new (require('passport-local').Strategy) (
   (email, password, done) => {
+
     debug('will authenticate user(email: "%s")', email)
     User.findOne({where: {email}})
       .then(user => {
@@ -118,12 +119,15 @@ passport.use(new (require('passport-local').Strategy) (
   }
 ))
 
-auth.get('/whoami', (req, res) => res.send(req.user))
+auth.get('/whoami', (req, res) => {
+    return res.send(req.user)
+})
 
 auth.post('/:strategy/login', (req, res, next) =>
-  passport.authenticate(req.params.strategy, {
+{
+   return passport.authenticate(req.params.strategy, {
     successRedirect: '/'
-  })(req, res, next)
+  })(req, res, next)}
 )
 
 auth.post('/logout', (req, res, next) => {
