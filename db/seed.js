@@ -80,12 +80,13 @@ const db = require('APP/db')
 
 
 
-  const reservation = function(){
+  const reservation = function(num){
 
     return {
 
       status: statusArr[Math.floor(Math.random()*statusArr.length)],
-      date: 2016+'-'+Math.ceil(Math.random()*100/12)+'-'+Math.ceil((Math.random())*100/4)
+      date: 2016+'-'+Math.ceil(Math.random()*100/12)+'-'+Math.ceil((Math.random())*100/4),
+      order: num
 
       }
   }
@@ -111,7 +112,7 @@ const db = require('APP/db')
       firstName: firstName,
       lastName: lastName,
       email: '123@'+lastName+".com",
-      password_digest: firstName,
+      password: firstName,
       isAdmin: isAdmin
     }
   }
@@ -157,69 +158,105 @@ const db = require('APP/db')
 //   .map(createObjs => User.create({ ... })))
 
 
-  const callAllCreateFuncs = function(){
+//   const callAllCreateFuncs = function(){
+//
+//     console.log ("IN CALL ALL CREATE FUNCS")
+//
+// for(var i = 0; i<100;i++){
+//     let counter = i+1
+//
+//  User.create(user())
+//     .then(function(user){
+//       console.log("USER CREATED", user)
+//       let reservationObj = reservation()
+//       let categoryObj = category()
+//       let productObj = product()
+//       let sellerReviewObj = sellerReview()
+//       let renterReviewObj = renterReview()
+//
+//       reservationObj.user_id = counter
+//       reservationObj.order = counter
+//       reservationObj.product_id = counter
+//       productObj.seller_id = counter
+//       productObj.category_id= counter
+//
+//       sellerReviewObj.reservation_id = counter
+//       renterReviewObj.reservation_id = counter
+//
+//       counter++
+//
+//
+//         Product.create(productObj)
+//         .then(()=>{
+//         Reservation.create(reservationObj)        })
+//         .then(()=>{
+//         Category.create(categoryObj)
+//         })
+//         .then(()=>{
+//
+//         SellerReview.create(sellerReviewObj)
+//         })
+//         .then(()=>{
+//         RenterReview.create(renterReviewObj)
+//       })
+//
+//     })
+//     .catch(function(err){
+//       console.log(err)
+//     })
+//     }
+//
+//     }
 
-    console.log ("IN CALL ALL CREATE FUNCS")
+const createSeeds = function(){
+  for(var i = 0; i < 5; i++){
+    Category.create(category())
+        .then(cat => {
+          User.create(user())
+                  .then(seller => {
+                    Product.create(product())
+                        .then(prod => {
+                          prod.setSeller(seller);
+                          prod.setCategory(cat);
+                          return prod
+                        })
+                        .then(prod => {
+                            return Reservation.create(reservation(prod.id))
+                              .then(res => {
+                                res.setProduct(prod)
+                                return res
+                              })
+                                .then(res2 => {
+                                  User.create(user())
+                                      .then(user2 => {
+                                        res2.setRenter(user2);
+                                        return res2;
+                                      })
+                                      .then(res3 => {
+                                        RenterReview.create(renterReview())
+                                            .then(review => {
+                                              review.setReservation(res3);
+                                              SellerReview.create(sellerReview())
+                                                  .then(rev => rev.setReservation(res3))
+                                            })
+                                      })
+                                })
+                        })
+                  })
+            }
+        )
+  }
 
-for(var i = 0; i<100;i++){
-    let counter = i+1
+}
 
- User.create(user())
-    .then(function(user){
-      console.log("USER CREATED", user)
-      let reservationObj = reservation()
-      let categoryObj = category()
-      let productObj = product()
-      let sellerReviewObj = sellerReview()
-      let renterReviewObj = renterReview()
-
-      reservationObj.user_id = counter
-      reservationObj.order = counter
-      reservationObj.product_id = counter
-      productObj.seller_id = counter
-      productObj.catagory_id= counter
-
-      sellerReviewObj.reservation_id = counter
-      renterReviewObj.reservation_id = counter
-
-      counter++
-
-
-        Product.create(productObj)
-        .then(()=>{
-        Reservation.create(reservationObj)        })
-        .then(()=>{
-        Category.create(categoryObj)
-        })
-        .then(()=>{
-
-        SellerReview.create(sellerReviewObj)
-        })
-        .then(()=>{
-        RenterReview.create(renterReviewObj)
-      })
-
-    })
-    .catch(function(err){
-      console.log(err)
-    })
-    }
-
-    }
 
 
 
   db.didSync
     .then(() =>
-    db.sync())
-    .then(callAllCreateFuncs)
+    db.sync({force: true}))
+    .then(createSeeds)
     .then(users => console.log(`Seeded database OK`))
     .catch(error => console.error(error))
 
-
-    // const seedUsers = () => db.Promise.map([
-    //   {name: 'so many', email: 'god@example.com', password: '1234'},
-    //   {name: 'Barack Obama', email: 'barack@example.gov', password: '1234'},
-    // ], user => db.model('users').create(user))
-
-    module.exports = callAllCreateFuncs
+    module.exports = createSeeds
