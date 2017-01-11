@@ -3,17 +3,9 @@ import axios from 'axios'
 const initialState = {
     categories: []
 }
-
-const reducer = (state = initialState, action) => {
-  let newState = Object.assign({}, state)
-	switch (action.type) {
-		case RECEIVE_CATEGORIES:
-			newState.categories = [...newState.categories, action.categories];
-	}
-	return newState;
-}
-
 const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
+
+
 
 export const receiveCategories = categories => ({
 	type: RECEIVE_CATEGORIES,
@@ -25,9 +17,21 @@ export const getCategories = () => {
     axios.get(`/api/categories`)
     .then(response => {
       dispatch(receiveCategories(response.data));
-    });
+    })
+    .catch(err => console.error(err.stack));
   };
 };
 
+const reducer = (state = initialState, action) => {
+  let newState = Object.assign({}, state)
+	switch (action.type) {
+		case RECEIVE_CATEGORIES:
+			newState.categories = action.categories;
+      break;
+    default:
+      return state;
+	}
+	return newState;
+}
 
 export default reducer;
