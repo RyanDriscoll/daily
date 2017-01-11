@@ -15,7 +15,7 @@ const router = require('express').Router();
 
 /* get user information by userId */
 router.get('/id/:userId', (req, res, next) => {
-    User.findById(req.params.id)
+    User.findById(req.params.userId)
         .then((user) => {
             res.send(user);
         });
