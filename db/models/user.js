@@ -23,17 +23,21 @@ const User = db.define('users', {
     defaultValue: false
   }
 }, {
-	indexes: [{fields: ['email'], unique: true,}],
-  hooks: {
-    beforeCreate: setEmailAndPassword,
-    beforeUpdate: setEmailAndPassword,
-  },
+	// indexes: [{fields: ['email'], unique: false,}],
+  // hooks: {
+  //   beforeCreate: setEmailAndPassword,
+  //   beforeUpdate: setEmailAndPassword,
+  // },
   instanceMethods: {
     authenticate(plaintext) {
       return new Promise((resolve, reject) =>
         bcrypt.compare(plaintext, this.password_digest,
           (err, result) =>
-            err ? reject(err) : resolve(result))
+          {console.log('here is result', result)
+              return err ? reject(err) : resolve(result)}
+        )
+
+
         )
     }
   }

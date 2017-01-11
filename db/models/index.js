@@ -12,7 +12,7 @@ const SellerReview = require('./sellerReview')
 const RenterReview = require('./renterReview')
 
 Product.belongsTo(User, {as: 'seller'});
-Product.belongsTo(Category);
+
 Category.hasMany(Product);
 
 Product.hasMany(Reservation);
