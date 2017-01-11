@@ -211,7 +211,7 @@ for(var i = 0; i<100;i++){
 
   db.didSync
     .then(() =>
-    db.sync({force: true}))
+    db.sync())
     .then(callAllCreateFuncs)
     .then(users => console.log(`Seeded database OK`))
     .catch(error => console.error(error))
