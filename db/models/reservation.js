@@ -8,7 +8,17 @@ const Reservation = db.define('reservations', {
     order: Sequelize.INTEGER,
     status: Sequelize.ENUM('carted', 'cancelled', 'completed')
   }, {
-    getterMethod: {
+    hooks: {
+      beforeBulkCreate: function(){
+        Reservation.max('order')
+        .then(orderNum=>{
+          this.update({
+            order:orderNum
+          })
+        })
+      }
+    },
+    getterMethods: {
       fulfilled: function() {
         return this.status === 'completed' && this.date < Date.now();
       }
