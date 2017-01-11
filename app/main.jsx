@@ -9,6 +9,8 @@ import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import Navbar from './components/Navbar'
 import Signup from './components/Signup.jsx'
+import ProductsView from './components/ProductsView'
+import {getProducts} from './reducers/products'
 
 const ExampleApp = connect(
   ({ auth }) => ({ user: auth })
@@ -20,10 +22,15 @@ const ExampleApp = connect(
     </div>
 )
 
+const onProductsEnter = ()=>{
+  store.dispatch(getProducts())
+}
+
 render (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={ExampleApp}>
+        <Route path="products" component={ProductsView} onEnter={onProductsEnter} />
         <Route path="signup" component={Signup}/>
         {/*<IndexRedirect to="/products" />*/}
       </Route>
