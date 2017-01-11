@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import Login from '../components/Login'
 import WhoAmI from '../components/WhoAmI'
+import {Link} from 'react-router'
+
 
 export default (props) => {
   return (
@@ -12,7 +13,7 @@ export default (props) => {
         <div className="collapse navbar-collapse">
           <ul className="nav navbar-nav">
             <li>
-              {props.user ? <WhoAmI/> : <a href="/login">Login</a>}
+              {props.user ? <WhoAmI/> : <Link href="/login">Login</Link>}
             </li>
             <li><a href="/about">About</a></li>
             <li><a href="/contact">Contact</a></li>

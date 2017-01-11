@@ -14,7 +14,7 @@ export const authenticated = user => ({
 })
 
 export const login = (username, password) => {
-    console.log('here is auth username and password', username, password);
+    // console.log('here is auth username and password', username, password);
     return dispatch =>
         axios.post('/api/auth/local/login',
             {username, password})

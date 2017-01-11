@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {signup} from 'APP/app/reducers/user';
+import axios from 'axios';
 
 class Signup extends Component{
     constructor(props){
@@ -10,7 +10,7 @@ class Signup extends Component{
             firstName: '',
             lastName: '',
             email: '',
-            password_digest: ''
+            password: ''
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -53,12 +53,12 @@ class Signup extends Component{
                             value={this.state.email}
                         />
                         <input
-                            id="password_digest-input"
-                            name="password_digest"
+                            id="password-input"
+                            name="password"
                             className="form-control"
                             placeholder="Enter password)"
                             onChange={e => this.handleInputChange(e)}
-                            value={this.state.password_digest}
+                            value={this.state.password}
 
                         />
                         <button id="signup-submit" type="submit" form="new-signup-form" value="Submit"
@@ -77,16 +77,16 @@ class Signup extends Component{
             firstName: e.target.firstName.value,
             lastName: e.target.lastName.value,
             email: e.target.email.value,
-            password_digest: e.target.password_digest.value
+            password: e.target.password.value
         }
 
-        this.props.signup(user);
+        axios.post('/api/users', user)
 
         this.setState({
             firstName: '',
             lastName: '',
             email: '',
-            password_digest: ''
+            password: ''
         })
     }
 
@@ -101,9 +101,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        signup: function(user){
-            dispatch(signup(user));
-        }
+
     }
 }
 
