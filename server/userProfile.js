@@ -5,13 +5,6 @@ const { User , Reservation , SellerReview, RenterReview, Product } = require('AP
 
 const router = require('express').Router();
 
-// Product.belongsTo(User, {as: 'seller'});
-// Product.belongsTo(Category);
-// Category.hasMany(Product);
-// Product.hasMany(Reservation);
-// Reservation.belongsTo(User);
-// SellerReview.belongsTo(Reservation);
-// RenterReview.belongsTo(Reservation);
 
 /* get user information by userId */
 router.get('/id/:userId', (req, res, next) => {
@@ -27,11 +20,12 @@ router.get('/id/:userId', (req, res, next) => {
 router.get('/reservations/asRenter/:userId', (req, res, next) => {
     Reservation.findAll({
         include: [{model: Product}],
-        where: {user_id: req.params.userId, status: 'completed'},
+        where: {renter_id: req.params.userId},
         order: 'date DESC'
     })
-    .then(results => {
-        res.send(results);
+    .then(reservations => {
+        const pastReservations = reservations.filter(reservation => reservation.fulfilled);
+        res.send(pastReservations);
     });
 })
 
@@ -40,58 +34,49 @@ router.get('/reservations/asRenter/:userId', (req, res, next) => {
 router.get('/reservations/asSeller/:userId', (req, res, next) => {
     Reservation.findAll({
         include: [{model: Product, where: { seller_id: req.params.userId}}],
-        where: { status: 'completed' },
         order: 'date DESC'
     })
-    .then(result => {
-        res.send(result);
+    .then(sellingTransactions => {
+        const pastSellingTransactions = sellingTransactions.filter(transaction=> transaction.fulfilled);
+        res.send(pastSellingTransactions);
     });
 })
 
 
-/* get users rating from sellers */
-/* find user under products and get its seller review */
+
+
+/* get users rating as renter */
+/* find reservations renterId get its seller review */
 router.get('/ratings/asRenter/:userId', (req, res, next) => {
-    Product.findAll({
-        include: [{model: Reservation, where: { user_id: req.params.userId},
-            include: [{model: SellerReview }]}]
+    Reservation.findAll({
+        include: [{model: Product}, {model: SellerReview}],
+        where: { renter_id: req.params.userId},
+        order: 'date DESC'
     })
-  .then(results => {
-      const reviews = [];
-      results.forEach(product => {
-          product.reservations.forEach(reservation => {
-              if(reservation.seller_review){
-                  reviews.push(reservation.seller_review);
-              }
-          })
-      });
-     res.send(reviews);
-  });
+    .then(reservations=> {
+        //filter only if reservation is reviewed
+        const reviewedReservations = reservations.filter(reservation => reservation.seller_review);
+        res.send(reviewedReservations);
+    })
 });
 
 
-/* get users rating from buyers */
-/* find user under products and get renters review */
+/* get users rating as seller */
+/* find product's sellerId and get renters review */
 router.get('/ratings/asSeller/:userId', (req, res, next) => {
-   Product.findAll({
-       where: {
-           seller_id: req.params.userId
-       },
-       include: [{ model : Reservation,
-           include: [{ model : RenterReview }] }]
-   })
-   .then(results => {
-       const reviews = [];
-       results.forEach(product => {
-           product.reservations.forEach(reservation => {
-               if(reservation.renter_review){
-                   reviews.push(reservation.renter_review);
-               }
-           })
-       })
-      res.send(reviews);
-   });
+    Reservation.findAll({
+        include: [{model: Product, where: {seller_id: req.params.userId}}
+        , {model: RenterReview}],
+        order: 'date DESC'
+    })
+    .then(reservations=> {
+        const reviewedReserations = reservations.filter(reservation => reservation.renter_review );
+        res.send(reviewedReserations);
+    })
 });
+
+
+
 
 
 

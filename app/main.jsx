@@ -9,6 +9,8 @@ import WhoAmI from './components/WhoAmI'
 import Navbar from './components/Navbar'
 import Signup from './components/Signup.jsx'
 import UserProfile from './components/UserProfile.jsx'
+import AccountInfoFormContainer from './components/userProfile/AccountInfoFormContainer.jsx'
+import TransactionHistory from './components/userProfile/TransactionHistory.jsx';
 
 import Sidebar from './components/Sidebar'
 import ProductsView from './components/ProductsView'
@@ -47,7 +49,10 @@ render (
         </Route>
         <Route path='/products/:productId' component={ProductView} onEnter={onProductEnter}/>
         <Route path="signup" component={Signup}/>
-        <Route path="userProfile/:id" component={UserProfile}/>
+        <Route path="userProfile/:id" component={UserProfile}>
+          <Route path="accountInfo" component={AccountInfoFormContainer}/>
+          <Route path="transactionHistory" component={TransactionHistory}/>
+        </Route>
         <Route path="login" component={Login}/>
 
       <IndexRedirect to="/products" />
