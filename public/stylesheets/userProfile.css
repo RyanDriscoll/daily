@@ -8,8 +8,7 @@
 
 .header-section {
     margin: 0;
-    margin-left: 300px;
-    margin-top:55px;
+    margin-top:50px;
     padding: 0;
     height: 200px;
     width:100vh - 295px;
@@ -54,7 +53,7 @@
     background-color: #3a3f41;
     color: #fff;
     font-family: "Helvetica Neue";
-    font-size: 20px;
+    font-size: 12px;
     font-weight: 300;
 }
 
@@ -67,6 +66,7 @@
 
 .profile-nav-item{
     padding: 0;
+    text-align:left;
     border-bottom: 1px solid black;
 }
 
@@ -79,7 +79,7 @@
 }
 
 .nav-icon {
-    margin-left: 50px;
+    margin-left: 0px;
     font-size: 30px;
     width: 50px;
     color:lightgray;
@@ -87,7 +87,7 @@
 
 .nav-link {
     margin-left: 25px;
-    font-size: 22px;
+    font-size: 18px;
     color: lightgray;
 }
 
