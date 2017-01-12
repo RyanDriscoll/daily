@@ -1,12 +1,10 @@
-import React,{Component, PropTypes} from 'react'
+import React,{Component} from 'react'
 import store from '../store'
 import {Link} from 'react-router'
 
-
-
 /*-----products component-----*/
 export const ProductsView = (props) => {
-
+  console.log("PRODS PROPS", props)
   const products = props.allProducts
 
   return (
@@ -14,10 +12,10 @@ export const ProductsView = (props) => {
   <div className="container-fluid">
     <div className='main'></div>
     {
-      products.map(product=>(
-        <div className="ProductsView ">
-          <div className="col-xs-3" key={product.id}>
-            <Link className='thumbnail' to={'/products'}>
+      products && products.map(product=>(
+        <div className="ProductsView " key={product.id}>
+          <div className="col-xs-3" >
+            <Link className='thumbnail'  to={`/products/${product.id}`}>
             <img src={product.img_url}/>
             <div className="caption">
               <h5>
