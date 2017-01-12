@@ -11,6 +11,7 @@ import Navbar from './components/Navbar'
 import Signup from './components/Signup.jsx'
 
 import ProductsView from './components/ProductsView'
+import ReviewsByUser from './components/ReviewsByUser'
 import {getProducts} from './reducers/products'
 import UserProfile from './components/UserProfile.jsx'
 
@@ -38,6 +39,7 @@ render (
         <Route path="signup" component={Signup}/>
         <Route path="userProfile/:id" component={UserProfile}/>
         <Route path="login" component={Login}/>
+        <Route path="review" component={ReviewsByUser}/>
 
         {/*<IndexRedirect to="/products" />*/}
       </Route>
