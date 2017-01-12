@@ -9,7 +9,7 @@ import WhoAmI from './components/WhoAmI'
 import Navbar from './components/Navbar'
 import Signup from './components/Signup.jsx'
 import UserProfile from './components/UserProfile.jsx'
-import Signup from './components/Signup'
+
 import Sidebar from './components/Sidebar'
 import ProductsView from './components/ProductsView'
 import ProductView from './components/ProductView'
