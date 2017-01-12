@@ -6,6 +6,11 @@ import Review from './Review';
 class ReviewsByUser extends Component{
     constructor(props){
         super(props)
+        this.ratingChanged = this.ratingChanged.bind(this);
+    }
+
+    ratingChanged(newRating){
+        console.log(newRating)
     }
 
     render(){
@@ -14,7 +19,7 @@ class ReviewsByUser extends Component{
                 <br></br>
                 <br></br>
                 <br></br>
-                <Review review={this.props.review}/>
+                <Review review={this.props.review} edit='false' color1={'#ffd700'} ratingChanged={this.ratingChanged}/>
             </div>
         )
     }
