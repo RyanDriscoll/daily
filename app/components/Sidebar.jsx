@@ -5,7 +5,10 @@ import Categories from './Categories';
 export default (props) => {
   return (
     <sidebar className="col-md-2">
-      <Categories />
+      {
+        props.location.pathname.startsWith('/userProfile') ? <div/> : <Categories />
+      }
+
     </sidebar>
   )
 }

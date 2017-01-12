@@ -18,7 +18,7 @@ class Login extends Component{
 
     render(){
         return (
-            <div>
+            <div className="col-md-10 signup-login">
             <h3>Welcome to Daily! </h3>
             <h4>Log in below.</h4>
             <form id="login-form" className="form-group" style={{marginTop: '20px'}} onSubmit={evt => {
