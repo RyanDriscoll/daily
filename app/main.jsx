@@ -30,7 +30,7 @@ const ExampleApp = connect(
   ({ user, children, router }) =>
     <div>
       <Navbar user={user} />
-      <Sidebar location={router.location} />
+      <Sidebar location={router.location} params={router.params} />
       {children}
     </div>
 )
