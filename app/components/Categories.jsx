@@ -26,13 +26,20 @@ export const Categories = (props) => (
         CATEGORIES
       </h3>
     </section>
+    <section>
+      <Link to='/products'>
+        <h4 className="menu-item">
+          ALL PRODUCTS
+        </h4>
+      </Link>
+    </section>
     <ul className="list-unstyled">
     {
       props.categories && getUniqueAndSort(props.categories)
         .map(category => (
           <li key={category.id} className="menu-item">
             <section>
-              <Link to={`/category/${category.id}`}><h4>{category.name}</h4></Link>
+              <Link to={`/products/categories/${category.id}`}><h4>{category.name}</h4></Link>
             </section>
           </li>
           )

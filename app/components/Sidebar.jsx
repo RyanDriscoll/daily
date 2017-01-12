@@ -2,13 +2,15 @@ import React from 'react';
 import {Link} from 'react-router';
 import Categories from './Categories';
 
-export default (props) => (
-  <sidebar className="col-md-2">
-    <Categories />
-  </sidebar>
-)
+export default (props) => {
+  return (
+    <sidebar className="col-md-2">
+      <Categories />
+    </sidebar>
+  )
+}
 
-import {connect} from 'react-redux'
+// import {connect} from 'react-redux'
 
 // export default connect (
 //   (state) => {
