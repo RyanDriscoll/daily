@@ -14,7 +14,11 @@ import TransactionHistory from './components/userProfile/TransactionHistory.jsx'
 
 import Sidebar from './components/Sidebar'
 import ProductsView from './components/ProductsView'
+
+import ReviewsByUser from './components/ReviewsByUser'
+
 import ProductView from './components/ProductView'
+
 import {getProducts} from './reducers/products'
 import {getSingleProduct} from './reducers/products'
 
@@ -54,6 +58,7 @@ render (
           <Route path="transactionHistory" component={TransactionHistory}/>
         </Route>
         <Route path="login" component={Login}/>
+        <Route path="review" component={ReviewsByUser}/>
 
       <IndexRedirect to="/products" />
       </Route>
