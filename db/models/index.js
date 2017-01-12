@@ -24,6 +24,7 @@ Reservation.belongsTo(User, {as: 'renter'});
 //this is new
 Reservation.belongsTo(Product);
 
+
 SellerReview.belongsTo(Reservation);
 RenterReview.belongsTo(Reservation);
 Reservation.hasOne(SellerReview);

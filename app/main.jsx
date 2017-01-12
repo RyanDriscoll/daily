@@ -9,10 +9,16 @@ import WhoAmI from './components/WhoAmI'
 import Navbar from './components/Navbar'
 import Signup from './components/Signup.jsx'
 import UserProfile from './components/UserProfile.jsx'
+import AccountInfoFormContainer from './components/userProfile/AccountInfoFormContainer.jsx'
+import TransactionHistory from './components/userProfile/TransactionHistory.jsx';
 
 import Sidebar from './components/Sidebar'
 import ProductsView from './components/ProductsView'
+
+import ReviewsByUser from './components/ReviewsByUser'
+
 import ProductView from './components/ProductView'
+
 import {getProducts} from './reducers/products'
 import {getSingleProduct} from './reducers/products'
 
@@ -47,8 +53,12 @@ render (
         </Route>
         <Route path='/products/:productId' component={ProductView} onEnter={onProductEnter}/>
         <Route path="signup" component={Signup}/>
-        <Route path="userProfile/:id" component={UserProfile}/>
+        <Route path="userProfile/:id" component={UserProfile}>
+          <Route path="accountInfo" component={AccountInfoFormContainer}/>
+          <Route path="transactionHistory" component={TransactionHistory}/>
+        </Route>
         <Route path="login" component={Login}/>
+        <Route path="review" component={ReviewsByUser}/>
 
       <IndexRedirect to="/products" />
       </Route>
