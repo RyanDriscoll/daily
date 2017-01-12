@@ -18,7 +18,7 @@ Category.hasMany(Product);
 Product.hasMany(Reservation);
 Reservation.belongsTo(Product);
 
-Reservation.belongsTo(User);
+Reservation.belongsTo(User, {as: 'renter'});
 
 SellerReview.belongsTo(Reservation);
 RenterReview.belongsTo(Reservation);
