@@ -6,12 +6,15 @@ import UserProfileSidebar from './userProfile/UserProfileSidebar.jsx';
 export default (props) => {
   const { id } =  props.params;
   return (
+
     <sidebar className="col-md-2">
       {
         props.location.pathname.startsWith('/userProfile') ? <UserProfileSidebar userId={id}  /> : <Categories />
       }
 
     </sidebar>
+
+
   )
 }
 

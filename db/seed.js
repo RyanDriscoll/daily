@@ -209,42 +209,53 @@ const db = require('APP/db')
 //     }
 
 const createSeeds = function(){
-  for(var i = 0; i < 5; i++){
-    Category.create(category())
-        .then(cat => {
-          User.create(user())
-                  .then(seller => {
-                    Product.create(product())
-                        .then(prod => {
-                          prod.setSeller(seller);
-                          prod.setCategory(cat);
-                          return prod
-                        })
-                        .then(prod => {
-                            return Reservation.create(reservation(prod.id))
-                              .then(res => {
-                                res.setProduct(prod)
-                                return res
-                              })
-                                .then(res2 => {
-                                  User.create(user())
-                                      .then(user2 => {
-                                        res2.setRenter(user2);
-                                        return res2;
-                                      })
-                                      .then(res3 => {
-                                        RenterReview.create(renterReview())
-                                            .then(review => {
-                                              review.setReservation(res3);
-                                              SellerReview.create(sellerReview())
-                                                  .then(rev => rev.setReservation(res3))
-                                            })
-                                      })
-                                })
-                        })
-                  })
-            }
-        )
+
+
+  for(var i = 0; i < 20; i++){
+
+    let cat;
+    let categoryObj=category()
+    let productObj = product()
+      Category.findOrCreate({where: {
+       name: categoryObj.name}})
+        .then(_cat => {
+          cat = _cat
+          productObj.category_id=cat.id
+          return User.create(user())
+        })
+        .then(seller => {
+          Product.create(product())
+              .then(prod => {
+
+                prod.setSeller(seller);
+
+                prod.setCategory(cat);
+
+                return prod
+              })
+              .then(prod => {
+                  return Reservation.create(reservation(prod.id))
+                    .then(res => {
+                      res.setProduct(prod)
+                      return res
+                    })
+                      .then(res2 => {
+                        User.create(user())
+                            .then(user2 => {
+                              res2.setRenter(user2);
+                              return res2;
+                            })
+                            .then(res3 => {
+                              RenterReview.create(renterReview())
+                                  .then(review => {
+                                    review.setReservation(res3);
+                                    SellerReview.create(sellerReview())
+                                        .then(rev => rev.setReservation(res3))
+                                  })
+                            })
+                      })
+              })
+        })
   }
 
 }
