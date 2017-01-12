@@ -42,7 +42,9 @@ render (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={ExampleApp}>
-        <Route path="products" component={ProductsView} onEnter={onProductsEnter}/>
+        <Route path="products" component={ProductsView} onEnter={onProductsEnter}>
+          <Route path ="categories/:categoryId" component={ProductsView} />
+        </Route>
         <Route path='/products/:productId' component={ProductView} onEnter={onProductEnter}/>
         <Route path="signup" component={Signup}/>
         <Route path="userProfile/:id" component={UserProfile}/>
