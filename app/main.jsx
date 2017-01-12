@@ -41,7 +41,6 @@ render (
       <Route path="/" component={ExampleApp}>
         <Route path="products" component={ProductsView} onEnter={onProductsEnter}/>
         <Route path='/products/:productId' component={ProductView} onEnter={onProductEnter}/>
-
         <Route path="signup" component={Signup}/>
         <Route path="userProfile/:id" component={UserProfile}/>
         <Route path="login" component={Login}/>
