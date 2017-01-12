@@ -255,7 +255,11 @@ const createSeeds = function(){
   db.didSync
     .then(() =>
     db.sync({force: true}))
+<<<<<<< HEAD
+    .then(callAllCreateFuncs)
+=======
     .then(createSeeds)
+>>>>>>> master
     .then(users => console.log(`Seeded database OK`))
     .catch(error => console.error(error))
 
