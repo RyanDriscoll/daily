@@ -1,6 +1,7 @@
 import React, {Component}  from 'react'
 import {login} from 'APP/app/reducers/auth'
 import {connect} from 'react-redux'
+import {browserHistory} from 'react-router'
 
 class Login extends Component{
     constructor(props){
@@ -25,6 +26,7 @@ class Login extends Component{
                 evt.preventDefault();
                 this.props.login(evt.target.email.value, evt.target.password_digest.value);
                 this.logInUser(evt);
+                browserHistory.push('/products');
             } }>
                 <input
                     id="email-input"

@@ -18,10 +18,3 @@ export default (props) => {
   )
 }
 
-// import {connect} from 'react-redux'
-
-// export default connect (
-//   (state) => {
-//     return { categories: state.categories.categories }
-//   }
-// ) (Sidebar)
