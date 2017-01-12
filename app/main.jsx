@@ -27,10 +27,10 @@ import {getSingleProduct} from './reducers/products'
 const ExampleApp = connect(
   ({ auth }) => ({ user: auth })
 ) (
-  ({ user, children }) =>
+  ({ user, children, router }) =>
     <div>
       <Navbar user={user} />
-      <Sidebar />
+      <Sidebar location={router.location} params={router.params} />
       {children}
     </div>
 )

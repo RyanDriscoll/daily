@@ -24,7 +24,7 @@ class Signup extends Component{
 
     render(){
             return (
-                <div>
+                <div className="col-md-10 signup-login">
                     <h3>Welcome to Daily! </h3>
                     <h4>Sign up below to create an account.</h4>
                     <form id="new-signup-form" className="form-group" style={{marginTop: '20px'}} onSubmit={e => this.signUpUser(e)}>

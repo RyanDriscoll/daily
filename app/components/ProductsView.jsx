@@ -17,7 +17,8 @@ export const ProductsView = (props) => {
               <img src={product.img_url}/>
               <div className="caption">
                 <h5>
-                  <span>{product.name}</span>
+                  <div className="text-left"><span>{product.name}</span></div>
+                    <div className='text-right'> <span>${parseFloat(product.price).toFixed(2)}</span></div>
                 </h5>
               </div>
             </Link>

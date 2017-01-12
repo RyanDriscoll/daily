@@ -11,6 +11,8 @@ return  Product.findAll()
   .catch(next)
 })
 
+
+
 router.get('/:productId',(req,res, next)=>{
   let productId = req.params.productId
   console.log("PRODUCT ID",productId)
@@ -20,6 +22,8 @@ return  Product.findById(productId)
   })
   .catch(next)
 })
+
+
 
 
 module.exports = router
