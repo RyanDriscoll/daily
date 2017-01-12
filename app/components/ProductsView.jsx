@@ -4,29 +4,36 @@ import {Link} from 'react-router'
 
 /*-----products component-----*/
 export const ProductsView = (props) => {
-  console.log("PRODS PROPS", props)
   const products = props.allProducts
+  const category = props.params.categoryId;
+  const filteredProducts = products.filter(product => product.category_id === +category);
+
+  const whichProducts = (array) => {
+    return (
+      array && array.map(product=>(
+        <div className="ProductsView " key={product.id}>
+          <div className="col-xs-3" >
+            <Link className='thumbnail'  to={`/products/${product.id}`}>
+              <img src={product.img_url}/>
+              <div className="caption">
+                <h5>
+                  <span>{product.name}</span>
+                </h5>
+              </div>
+            </Link>
+          </div>
+        </div>
+        )
+      )
+    )
+  }
 
   return (
 
   <div className="container-fluid">
     <div className='main'></div>
     {
-      products && products.map(product=>(
-        <div className="ProductsView " key={product.id}>
-          <div className="col-xs-3" >
-            <Link className='thumbnail'  to={`/products/${product.id}`}>
-            <img src={product.img_url}/>
-            <div className="caption">
-              <h5>
-                <span>{product.name}</span>
-              </h5>
-            </div>
-            </Link>
-        </div>
-      </div>
-      )
-    )
+      category ? whichProducts(filteredProducts) : whichProducts(products)
     }
 
   </div>
@@ -40,7 +47,6 @@ import {getProducts} from '../reducers/products'
 
 
 const mapStateToProps = (state, ownProps) => {
-  console.log("MSTP", state)
   return {
     allProducts: state.products.allProducts
   }
