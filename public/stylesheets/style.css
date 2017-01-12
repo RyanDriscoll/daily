@@ -42,7 +42,7 @@ sidebar {
   text-align: center;
 }
 
-.main {
+.main, .signup-login {
   padding-top: 75px;
 }
 
@@ -56,3 +56,4 @@ sidebar {
   margin-left: 75px;
 
 }
+
