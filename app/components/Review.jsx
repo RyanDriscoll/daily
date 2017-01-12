@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 
 
 export default function Review(props) {
-    let reviews = props.review;
 
+    let reviews = props.review;
+    console.log("REVIEWS", props.review)
     console.log('props.review in review', props.review)
     return(
         <div>
@@ -22,6 +23,3 @@ export default function Review(props) {
     )
 
 }
-
-
-

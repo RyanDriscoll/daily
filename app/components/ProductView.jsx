@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import store from '../store'
 import {Link} from 'react-router'
 
+
 /*-----products component-----*/
 export const ProductView = (props) => {
 
