@@ -2,6 +2,8 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
+import AccountInfoFormContainer from './userProfile/AccountInfoFormContainer.jsx';
 
 import { getUserInfo, getRentedTransactions, getSoldTransactions, getAsRenterRatings, getAsSellerRatings } from 'APP/app/reducers/userProfile';
 
@@ -37,60 +39,23 @@ class UserProfile extends Component {
 
         const aggregateRatingAsRenter = this.aggregateRatings(this.props.rentingRatings);
         const aggregateRatingAsSeller = this.aggregateRatings(this.props.sellingRatings);
+        const {id} = this.props.routeParams;
 
         return (
-            <div className="userProfileContainer">
-                <div> Add Category Section </div>
-                <div className="userContainer">
-                    <div> First Name </div>
-                    <label>{this.props.userInfo.firstName}</label>
-                    <div> Last Name </div>
-                    <label>{this.props.userInfo.lastName}</label>
-                    <div> Email </div>
-                    <label> {this.props.userInfo.email}</label>
-                </div>
-                <div className="transactionContainer">
-                    <div>
-                        <div> Rented History </div>
-                        {this.props.rentedTransactions.map(transaction => {
-                             return( <div>
-                                <span>Product Name: {transaction.product.name} </span>
-                                <span>Product description: {transaction.product.description}</span>
-                                <span>Address: {transaction.product.address} </span>
-                                <span> City: {transaction.product.city} </span>
-                                <span> State: {transaction.product.state} </span>
-                                <span> Zip: {transaction.product.zip} </span>
-                                <span> Price: {transaction.product.price} </span>
-                            </div>)
-                        })}
+            <div className="user-profile-page container container-fluid">
+                <div className="col-md-10 header-section">
+                    <div className="profile-img-container">
+                        <img className="profile-img"></img>
                     </div>
-                    <div>
-                        <div> Sold History </div>
-                        {this.props.soldTransactions.map(transaction => {
-                            return( <div>
-                                <span>Product Name: {transaction.product.name} </span>
-                                <span>Product description: {transaction.product.description}</span>
-                                <span>Address: {transaction.product.address} </span>
-                                <span> City: {transaction.product.city} </span>
-                                <span> State: {transaction.product.state} </span>
-                                <span> Zip: {transaction.product.zip} </span>
-                                <span> Price: {transaction.product.price} </span>
-                            </div>)
-                        })}
+                    <div className="profile-header-quote">
+                        Some Text goes here.
                     </div>
-
-                    <div>
-                        <div> Aggregate Seller Rating </div>
-                        <div> {aggregateRatingAsSeller}</div>
-                        <div> Aggregate Renter Rating </div>
-                        <div> {aggregateRatingAsRenter}</div>
-
-
-                    </div>
-
                 </div>
 
-        </div>
+                <div className="user-profile-container container container-fluid">
+                    {this.props.children && React.cloneElement(this.props.children, Object.assign({}, this.props))}
+                </div>
+            </div>
         )
     }
 }
