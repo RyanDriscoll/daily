@@ -11,6 +11,13 @@ return  Product.findAll()
   .catch(next)
 })
 
+router.post('/', (req, res, next) => {
+  console.log('############', req.body)
+  Product.create(req.body)
+  .then(product => res.json(product))
+  .catch(next)
+})
+
 router.get('/:productId',(req,res, next)=>{
   let productId = req.params.productId
   console.log("PRODUCT ID",productId)

@@ -55,6 +55,16 @@ export const getSingleProduct = (productId) =>dispatch=>{
 
 }
 
+/*-----products reducer-----*/
+export const postProduct = (product) => {
+  console.log('^^^^^^^^^^^^', product);
+  return dispatch => {
+  axios.post(`/api/products`, product)
+  .then(response => response.data)
+  .catch(err => console.error(err))
+  }
+}
+
 
 /*-----products reducer-----*/
 export default function(state = initialState, action) {
