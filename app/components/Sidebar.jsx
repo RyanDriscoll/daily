@@ -4,9 +4,12 @@ import Categories from './Categories';
 
 export default (props) => {
   return (
+
     <sidebar className="col-md-2">
       <Categories />
     </sidebar>
+
+
   )
 }
 
