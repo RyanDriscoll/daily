@@ -4,6 +4,7 @@ import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 
 import {whoami} from './reducers/auth'
+import {getCategories} from './reducers/category'
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 
@@ -13,3 +14,4 @@ export default store
 
 // Set the auth info at start
 store.dispatch(whoami())
+store.dispatch(getCategories())

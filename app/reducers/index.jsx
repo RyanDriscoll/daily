@@ -4,7 +4,9 @@ import userProfile from 'APP/app/reducers/userProfile';
 
 
 const rootReducer = combineReducers({
-  auth: require('./auth').default, products, userProfile
+  auth: require('./auth').default, userProfile,
+  categories: require('./category').default,
+  products: products
 })
 
 export default rootReducer
