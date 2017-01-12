@@ -13,12 +13,17 @@ const RenterReview = require('./renterReview')
 
 Product.belongsTo(User, {as: 'seller'});
 
-Category.hasMany(Product);
+// Category.hasMany(Product);
+Product.belongsTo(Category);
 
-Product.hasMany(Reservation);
-Reservation.belongsTo(Product);
+//I got rid of this
+// Product.hasMany(Reservation);
 
 Reservation.belongsTo(User, {as: 'renter'});
+
+//this is new
+Reservation.belongsTo(Product);
+
 
 SellerReview.belongsTo(Reservation);
 RenterReview.belongsTo(Reservation);

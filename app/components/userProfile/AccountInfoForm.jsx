@@ -3,8 +3,11 @@ import React from 'react';
 
 
 export default function(props)  {
+    console.log('this is rendering?', props);
     return (
-        <div className="col-sm-9 account-info-container">
+
+
+        <div className="col-sm-6 account-info-container">
                     <form className="form-group account-info-form">
                             <div className="account-info-title">Account Information</div>
                             <label className="form-label"> First Name </label>

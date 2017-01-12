@@ -7,11 +7,12 @@
 }
 
 .header-section {
-    margin: 0 auto;
+    margin: 0;
+    margin-left: 300px;
     margin-top:55px;
     padding: 0;
     height: 200px;
-    width:1600px;
+    width:100vh - 295px;
     background-color: #3a3f41;
     position: relative;
 }
@@ -37,12 +38,12 @@
 }
 
 .user-profile-container {
-    height: 750px;
+    height: 564px;
     margin: 0 auto;
     padding: 0;
     font-size: 18px;
-    width: 1600px;
-    border: 2px solid black;
+    width: 100%;
+
 }
 
 

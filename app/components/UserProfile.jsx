@@ -53,7 +53,7 @@ class UserProfile extends Component {
                 </div>
 
                 <div className="user-profile-container container container-fluid">
-                    <div className="col-sm-3 profile-nav-container">
+                    {/*<div className="col-sm-3 profile-nav-container">
                         <nav className="profile-nav">
                             <ul className="profile-nav-list">
                                 <Link to={`/userProfile/${id}/accountInfo`} style={{textDecoration:'none'}}><li className="profile-nav-item"><i className="ion-android-star-outline nav-icon"> </i>
@@ -81,7 +81,7 @@ class UserProfile extends Component {
                                 </li></Link>
                             </ul>
                         </nav>
-                    </div>
+                    </div>*/}
                     {this.props.children && React.cloneElement(this.props.children, Object.assign({}, this.props))}
                     {/*<AccountInfo userInfo={this.props.userInfo} />*/}
 

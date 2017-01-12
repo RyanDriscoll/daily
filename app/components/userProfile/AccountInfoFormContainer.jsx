@@ -24,7 +24,7 @@ export default class AccountInformationFormContainer extends Component {
         render(){
             console.log('state now', this.props);
             return(
-                <AccountInfoForm handleInput={this.handleInput} userInfo={this.props}/>
+                <AccountInfoForm handleInput={this.handleInput} userInfo={this.props.userInfo}/>
             )
         }
 }
