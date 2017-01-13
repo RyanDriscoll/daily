@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import {browserHistory} from 'react-router';
 
 class Signup extends Component{
     constructor(props){
@@ -27,7 +28,11 @@ class Signup extends Component{
                 <div className="col-md-10 signup-login">
                     <h3>Welcome to Daily! </h3>
                     <h4>Sign up below to create an account.</h4>
-                    <form id="new-signup-form" className="form-group" style={{marginTop: '20px'}} onSubmit={e => this.signUpUser(e)}>
+                    <form id="new-signup-form" className="form-group" style={{marginTop: '20px'}} onSubmit={e => {
+                        this.signUpUser(e);
+                        browserHistory.push('/products');
+                        }
+                    }>
                         <input
                             id="first-name-input"
                             name="firstName"

@@ -22,6 +22,24 @@ export const getCategories = () => {
   };
 };
 
+export const getUniqueAndSort = (arr) => {
+  const seen = {};
+  return arr.filter(item => {
+    if (seen[item.name]) return;
+    seen[item.name] = 1;
+    return item;
+  }).sort(function(a, b) {
+    const nameA = a.name.toUpperCase();
+    const nameB = b.name.toUpperCase();
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+  });
+}
+
 const reducer = (state = initialState, action) => {
   let newState = Object.assign({}, state)
 	switch (action.type) {
