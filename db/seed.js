@@ -2,10 +2,40 @@ const db = require('APP/db')
 
   const Category = require('APP/db/models/category')
   const Product= require('APP/db/models/product')
-  const RenterReview = require('APP/db/models/renterReview')
   const Reservation = require('APP/db/models/reservation')
-  const SellerReview = require('APP/db/models/sellerReview')
+  const Review = require('APP/db/models/review')
   const User = require('APP/db/models/user')
+
+  const arrOfUsers = [
+    {
+      firstName: 'Spencer',
+      lastName: 'Goodwine',
+      email: 'spence@spence.com',
+      isAdmin: true,
+      password: '123'
+    },
+    {
+      firstName: 'Alvin',
+      lastName: 'Yuen',
+      email: 'alvin@alvin.com',
+      isAdmin: false,
+      password: '123'
+    },
+    {
+      firstName: 'Rebekah',
+      lastName: 'Klemm',
+      email: 'reb@reb.com',
+      isAdmin: true,
+      password: '123'
+    },
+    {
+      firstName: 'Ryan',
+      lastName: 'Driscoll',
+      email: 'ryan@ryan.com',
+      isAdmin: false,
+      password: '123'
+    }
+  ]
 
   const firstnameArr = ['John', 'Zeke', 'Nick', 'Waseem', 'Rebecca', 'Ryan', 'Daniel', 'Claire', 'Alexis', 'Tom','Jean', 'Nicole', 'Kiara', 'Kristin', 'Diana', 'Tyler', 'Grant', 'Paxton', 'Alan', 'Patricia', 'Grace', 'Susan', 'Maxwell', 'Ulysses']
   const lastNameArr =[ 'Bowie', 'Cohen', 'John', 'Jagger', 'McCartney', 'Wonder', 'Cave', 'Reed', 'Waits', 'Gaye', 'Franklin', 'John', 'Clapton', 'Otis', 'Summers', 'Fitzgerald', 'Baker', 'Coltrane' ]
@@ -208,12 +238,88 @@ const db = require('APP/db')
 //
 //     }
 
+user1 = {
+firstName: "Spencer",
+lastName: "Goodwine",
+email: 'spencer@spence.com',
+password: '123',
+isAdmin: true
+}
+
+user2 = {
+firstName: 'Ryan',
+lastName: "Driscoll",
+email: "ryan@ryan.com",
+password: "123",
+isAdmin: false
+}
+
+product1 = { name: 'power drill',
+      description: 'This is a drill description',
+      address: '123 N Java Street',
+      city: 'Chicago',
+      state: 'IL',
+      zip: '60007',
+      price: 25,
+      end_date:     2016+'-'+Math.ceil(Math.random()*100/12)+'-'+Math.ceil((Math.random())*100/4),
+      img_url: 'http://lorempixel.com/400/200/'
+}
+
+reservation1= {
+status: 'completed',
+          date: 2016+'-'+Math.ceil(Math.random()*100/12)+'-'+Math.ceil((Math.random())*100/4),
+          order: 1
+}
+
+
+//Renter Review
+review1={
+stars: 5,
+   text:  'Great product'
+}
+
+
+//Seller Review
+review2={
+stars: 2,
+text: 'Terrible User'
+}
+
+category1={
+  name: 'Home goods'
+}
+
+category2={
+  name: 'Sporting goods'
+}
+
+const newCreateSeeds = () => {
+  return Promise.all([User.create(user1),
+User.create(user2),
+Product.create(product1),
+Category.create(category1),
+Category.create(category2),
+Reservation.create(reservation1),
+Review.create(review1),
+Review.create(review2)])
+.then(([user1, user2, product, category1, category2, reservation, review1, review2]) => {
+  return Promise.all([reservation.setSellerReview(review1),
+                      reservation.setRenterReview(review2),
+                      product.setSeller(user1),
+                      product.setCategory(category1),
+                      reservation.setRenter(user2),
+                      reservation.setProduct(product)
+                      ])
+})}
+
+
+
 const createSeeds = function(){
 
 
   for(var i = 0; i < 20; i++){
 
-    let cat;
+    let cat, user1;
     let categoryObj=category()
     let productObj = product()
       Category.findOrCreate({where: {
@@ -224,6 +330,7 @@ const createSeeds = function(){
           return User.create(user())
         })
         .then(seller => {
+          user1 = seller;
           Product.create(product())
               .then(prod => {
 
@@ -237,6 +344,7 @@ const createSeeds = function(){
                   return Reservation.create(reservation(prod.id))
                     .then(res => {
                       res.setProduct(prod)
+                      res.setSellerReview()
                       return res
                     })
                       .then(res2 => {
@@ -246,11 +354,10 @@ const createSeeds = function(){
                               return res2;
                             })
                             .then(res3 => {
-                              RenterReview.create(renterReview())
+                              Review.create(renterReview())
                                   .then(review => {
                                     review.setReservation(res3);
-                                    SellerReview.create(sellerReview())
-                                        .then(rev => rev.setReservation(res3))
+
                                   })
                             })
                       })
@@ -266,7 +373,7 @@ const createSeeds = function(){
   db.didSync
     .then(() =>
     db.sync({force: true}))
-    .then(createSeeds)
+    .then(newCreateSeeds)
     .then(users => console.log(`Seeded database OK`))
     .catch(error => console.error(error))
 
