@@ -20,6 +20,7 @@ import ProductsView from './components/ProductsView'
 import ReviewsByUser from './components/ReviewsByUser'
 
 import ProductView from './components/ProductView'
+import PostProduct from './components/PostProduct'
 
 import {getProducts} from './reducers/products'
 import {getSingleProduct} from './reducers/products'
@@ -63,6 +64,7 @@ render (
         </Route>
         <Route path="login" component={Login}/>
         <Route path="review" component={ReviewsByUser}/>
+        <Route path="post" component={PostProduct}/>
 
       <IndexRedirect to="/products" />
       </Route>

@@ -35,7 +35,7 @@ export const getProducts = () =>dispatch=>{
         return dispatch(receiveProducts(products))}
     )
       .catch(function(err){
-        console.log(err)
+        console.error(err)
       })
 
 }
@@ -50,15 +50,23 @@ export const getSingleProduct = (productId) =>dispatch=>{
         return dispatch(receiveProduct(product))}
     )
       .catch(function(err){
-        console.log(err)
+        console.error(err)
       })
 
+}
+
+/*-----products reducer-----*/
+export const postProduct = (product) => {
+  return dispatch => {
+  axios.post(`/api/products`, product)
+  .then(response => response.data)
+  .catch(err => console.error(err))
+  }
 }
 
 
 /*-----products reducer-----*/
 export default function(state = initialState, action) {
-  console.log("PRODUCT ACTION", action.type )
     let newState = Object.assign({}, state)
     switch (action.type) {
         case RECEIVE_PRODUCTS:

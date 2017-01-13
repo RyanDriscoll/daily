@@ -1,7 +1,7 @@
 'use strict';
 
 const db = require('APP/db');
-const { User , Reservation , SellerReview, RenterReview, Product } = require('APP/db/models');
+const { User , Reservation , Review, Product } = require('APP/db/models');
 
 const router = require('express').Router();
 

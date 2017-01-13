@@ -8,8 +8,7 @@ const User = require('./user')
 const Product = require('./product')
 const Category = require('./category')
 const Reservation = require('./reservation')
-const SellerReview = require('./sellerReview')
-const RenterReview = require('./renterReview')
+const Review = require('./review')
 
 Product.belongsTo(User, {as: 'seller'});
 
@@ -20,14 +19,15 @@ Product.belongsTo(Category);
 // Product.hasMany(Reservation);
 
 Reservation.belongsTo(User, {as: 'renter'});
+User.hasMany(Reservation, {as: 'renterReservations'})
 
 //this is new
 Reservation.belongsTo(Product);
 
+Reservation.belongsTo(Review, { as: 'sellerReview'})
+Reservation.belongsTo(Review, { as: 'renterReview'})
 
-SellerReview.belongsTo(Reservation);
-RenterReview.belongsTo(Reservation);
-Reservation.hasOne(SellerReview);
-Reservation.hasOne(RenterReview);
+User.belongsToMany(Review, { through: Reservation, as: 'sellerReviews', foreignKey: 'seller_review_id' })
+User.belongsToMany(Review, { through: Reservation, as: 'renterReviews', foreignKey: 'renter_review_id' })
 
-module.exports = {User, Product, Category, Reservation, SellerReview, RenterReview}
+module.exports = {User, Product, Category, Reservation, Review}
