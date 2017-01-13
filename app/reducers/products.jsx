@@ -15,6 +15,15 @@ export const receiveProducts = (products) =>{
 }
 
 
+const RECEIVE_PRODUCT_RATINGS = 'RECEIVE_PRODUCT_RATINGS'
+
+export const receiveProductRatings = (ratings)=>{
+  return {
+    type: RECEIVE_PRODUCT_RATINGS,
+    selectedProductRatings: ratings
+  }
+}
+
 const RECEIVE_PRODUCT = 'RECEIVE_PRODUCT'
 
 /*-----action-creator single products-----*/
@@ -63,6 +72,11 @@ export const postProduct = (product) => {
   .catch(err => console.error(err))
   }
 }
+
+
+// export const getProductReview = (product.id){
+//   axios.get('/api/reservations')
+// }
 
 
 /*-----products reducer-----*/

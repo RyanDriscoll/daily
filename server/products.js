@@ -19,6 +19,7 @@ router.post('/', (req, res, next) => {
 
 router.get('/:productId', (req, res, next) => {
 	let productId = req.params.productId
+	console.log("productID", productId)
 	return Product.findById(productId)
 		.then(products => {
 			res.json(products)
@@ -28,4 +29,3 @@ router.get('/:productId', (req, res, next) => {
 
 
 module.exports = router
-

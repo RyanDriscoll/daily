@@ -28,15 +28,17 @@ const Reservation = db.define('reservations', {
     },
     classMethods:{
       getSellerAndProduct: function(reservationId){
+        console.log("IN CLASS METH RESERV")
         return Reservation.findAll({
           where:{
             id: reservationId
           },
-          include: [{model:Product}, {model: SellerReviews}]
+          include: [{model:Product}, {model: SellerReview}]
         }).then(reservation=>{
 
           return reservation
         })
+        .catch(err=>console.log(err))
       }
     }
   });

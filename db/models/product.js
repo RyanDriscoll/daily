@@ -14,7 +14,14 @@ const Product = db.define('products', {
   price: Sequelize.DECIMAL,
   end_date: Sequelize.DATEONLY,
   img_url: Sequelize.STRING
+},{
+  classMethods: {
+    getProductReviews: function(){
+      this.findAll({
 
+      })
+    }
+  }
 });
 
 module.exports = Product;
