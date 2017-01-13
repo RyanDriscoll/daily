@@ -3,7 +3,7 @@
 const Sequelize = require('sequelize');
 const db = require('APP/db');
 
-const RenterReview = db.define('renter_reviews', {
+const RenterReview = db.define('review', {
   stars: Sequelize.INTEGER,
   text: Sequelize.TEXT
   });
