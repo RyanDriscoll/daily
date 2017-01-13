@@ -39,7 +39,3 @@ export default function Review(props) {
     )
 
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> master
