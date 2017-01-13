@@ -1,6 +1,8 @@
 import React,{Component} from 'react'
 import store from '../store'
 import {Link} from 'react-router'
+import Reservation from './Reservation'
+
 
 /*-----products component-----*/
 export const ProductView = (props) => {
@@ -28,6 +30,7 @@ export const ProductView = (props) => {
                     <span>{product.city}, {product.state}, {product.zip}</span>
                     </div>
                   </h5>
+                  <Reservation />
                   </div>
                 </div>
               </div>

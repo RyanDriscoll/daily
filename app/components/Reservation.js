@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-
+import { SingleDatePicker } from 'react-dates';
 
 class Reservation extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            date: null,
+            focused: false
+        }
         const product = props.selectedProduct;
         let user;
         if(props.auth){
@@ -23,11 +27,19 @@ class Reservation extends Component {
                         name="reservation-date"
                         className="form-control"
                     />
+
                     <button id="reservation-submit" type="submit" form="new-reservation-form" value="Submit"
                             className="btn btn-primary btn-block">
                         <span className="glyphicon glyphicon-plus"></span> SUBMIT
                     </button>
                 </form>
+                <SingleDatePicker
+                        id="date_input"
+                        date={this.state.date}
+                        focused={this.state.focused}
+                        onDateChange={(date) => { this.setState({ date }); }}
+                        onFocusChange={({ focused }) => { this.setState({ focused }); }}
+                    />
             </div>
         )
     }
