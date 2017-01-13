@@ -1,8 +1,8 @@
 import React , { Component } from 'react';
 import AccountInfoForm from './AccountInfoForm';
+import { connect } from 'react-redux';
 
-
-export default class AccountInformationFormContainer extends Component {
+class AccountInformationFormContainer extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -17,16 +17,40 @@ export default class AccountInformationFormContainer extends Component {
     }
 
     handleInput(e){
-        console.log('HANDLEINPUT:', e.target.name, e.target.value)
-        // this.setState({firstName: e.target.value});x`
+        this.setState({[e.target.name]: e.target.value});
+    }
+
+    handleSubmit(e){
+        e.preventDefault();
+        console.log('submitt button clicked')
     }
 
         render(){
-            console.log('state now', this.props);
             return(
-                <AccountInfoForm handleInput={this.handleInput} userInfo={this.props.userInfo}/>
+                <AccountInfoForm
+                handleInput={this.handleInput}
+                userInfo={this.props.userInfo}
+                {...this.state}
+                handleSubmit={this.handleSubmit}/>
             )
         }
 }
+
+
+
+const mapStateToProps = (state, ownProps) => {
+    return {};
+}
+
+
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+
+        }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountInformationFormContainer);
 
 

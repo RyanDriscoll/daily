@@ -62,13 +62,15 @@ class UserProfile extends Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-    const { userInfo, rentedTransactions, soldTransactions, rentingRatings, sellingRatings } = state.userProfile;
+    const { userInfo, rentedTransactions, soldTransactions, pendingRentTransactions, pendingSellTransactions, rentingRatings, sellingRatings } = state.userProfile;
     return {
         userInfo,
         rentedTransactions,
         soldTransactions,
+        pendingRentTransactions,
+        pendingSellTransactions,
         rentingRatings,
-        sellingRatings
+        sellingRatings,
     };
 }
 

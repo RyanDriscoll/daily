@@ -21,6 +21,9 @@ const Reservation = db.define('reservations', {
     getterMethods: {
       fulfilled: function() {
         return this.status === 'completed' && this.date < Date.now();
+      },
+      pendingReservation: function() {
+        return this.status === 'completed' && this.date > Date.now();
       }
     }
   });

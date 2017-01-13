@@ -14,34 +14,36 @@ router.get('/id/:userId', (req, res, next) => {
         });
 });
 
+/* updating user information by userId */
+router.post('/update', (req, res, next ) => {
+    console.log('updating user information', req.body);
+    res.send();
+});
+
 
 /* get user renting transactions */
-//
-router.get('/reservations/asRenter/:userId', (req, res, next) => {
+router.get('/reservations/asRenter/:userId/', (req, res, next) => {
     Reservation.findAll({
         include: [{model: Product}],
         where: {renter_id: req.params.userId},
         order: 'date DESC'
     })
     .then(reservations => {
-        const pastReservations = reservations.filter(reservation => reservation.fulfilled);
-        res.send(pastReservations);
+        res.send(reservations);
     });
-})
+});
 
 
 /* get user selling transactions */
-router.get('/reservations/asSeller/:userId', (req, res, next) => {
+router.get('/reservations/asSeller/:userId/', (req, res, next) => {
     Reservation.findAll({
         include: [{model: Product, where: { seller_id: req.params.userId}}],
         order: 'date DESC'
     })
     .then(sellingTransactions => {
-        const pastSellingTransactions = sellingTransactions.filter(transaction=> transaction.fulfilled);
-        res.send(pastSellingTransactions);
+        res.send(sellingTransactions);
     });
-})
-
+});
 
 
 

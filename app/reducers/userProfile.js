@@ -4,6 +4,8 @@ const initialState = {
     userInfo: {},
     rentedTransactions: [],
     soldTransactions: [],
+    pendingRentTransactions: [],
+    pendingSellTransactions: [],
     rentingRatings: [],
     sellingRatings: []
 }
@@ -13,6 +15,8 @@ const initialState = {
 const SET_USER_INFO = 'SET_USER_INFO';
 const SET_RENTED_TRANSACTIONS = 'SET_RENTED_TRANSACTIONS';
 const SET_SOLD_TRANSACTIONS = 'SET_SOLD_TRANSACTIONS';
+const SET_PENDING_RENT_TRANSACTIONS = 'SET_PENDING_RENT_TRANSACTIONS';
+const SET_PENDING_SELL_TRANSACTIONS = 'SET_PENDING_SELL_TRANSACTIONS';
 const SET_RENTING_RATINGS = 'SET_RENTING_RATINGS';
 const SET_SELLING_RATINGS = 'SET_SELLING_RATINGS';
 
@@ -21,6 +25,8 @@ const SET_SELLING_RATINGS = 'SET_SELLING_RATINGS';
 const setUserInfo = userInfo => ({ type: SET_USER_INFO, userInfo});
 const setRentedTransactions = rentedTransactions => ({type: SET_RENTED_TRANSACTIONS, rentedTransactions});
 const setSoldTransactions = soldTransactions => ({type: SET_SOLD_TRANSACTIONS, soldTransactions});
+const setPendingRentTransactions = pendingRentTransactions => ({type: SET_PENDING_RENT_TRANSACTIONS, pendingRentTransactions});
+const setPendingSellTransactions = pendingSellTransactions => ({type: SET_PENDING_SELL_TRANSACTIONS, pendingSellTransactions});
 const setSellingRatings = sellingRatings => ({type: SET_SELLING_RATINGS, sellingRatings});
 const setRentingRatings = rentingRatings => ({type: SET_RENTING_RATINGS, rentingRatings});
 
@@ -38,6 +44,12 @@ export default function setUserInfoReducer (prevState = initialState, action){
         case SET_SOLD_TRANSACTIONS:
             nextState.soldTransactions = action.soldTransactions;
             return nextState;
+        case SET_PENDING_RENT_TRANSACTIONS:
+            nextState.pendingRentTransactions = action.pendingRentTransactions;
+            return nextState;
+        case SET_PENDING_SELL_TRANSACTIONS:
+            nextState.pendingSellTransactions = action.pendingSellTransactions;
+            return nextState;
         case SET_RENTING_RATINGS:
             nextState.rentingRatings = action.rentingRatings;
             return nextState;
@@ -50,6 +62,7 @@ export default function setUserInfoReducer (prevState = initialState, action){
 };
 
 /* ------ dispatchers ------- */
+
 export const getUserInfo = (id) => dispatch => {
     axios.get(`/api/userProfile/id/${id}`)
     .then((res)=> {
@@ -59,23 +72,45 @@ export const getUserInfo = (id) => dispatch => {
     .catch( err => console.error(`setting user info unsuccessful: ${err}`));
 };
 
+
+export const updateUserInfo = (id) => dispatch => {
+    axios.post(`/api/userProfile/update/`)
+    .then((res)=> {
+        console.log(`updating user info successful: ${res}`);
+    })
+    .catch( err => console.error(`updating user info unsuccessful: ${err}`));
+};
+
+/* filter out pending and past transactions */
 export const getRentedTransactions = (id) => dispatch => {
     axios.get(`/api/userProfile/reservations/asRenter/${id}`)
     .then((res)=> {
            console.log(`retrieving renter transactions: ${JSON.stringify(res)}`);
-           dispatch(setRentedTransactions(res.data));
+            const pendingReservations = res.data.filter(reservation => reservation.pendingReservation);
+            dispatch(setPendingRentTransactions(pendingReservations));
+            const pastReservations = res.data.filter(reservation => reservation.fulfilled);
+            dispatch(setRentedTransactions(pastReservations));
     })
     .catch( err => console.error(`setting renter transactions unsuccessful: ${err}`));
+
 }
 
+/* filter out pending and past transactions */
 export const getSoldTransactions = (id) => dispatch => {
     axios.get(`/api/userProfile/reservations/asSeller/${id}`)
     .then((res)=> {
          console.log(`retrieving seller transactions: ${JSON.stringify(res)}`);
-         dispatch(setSoldTransactions(res.data));
+            const pendingSellingTransactions = res.data.filter(transaction => transaction.pendingReservation);
+            dispatch(setPendingSellTransactions(pendingSellingTransactions));
+            const soldTransactions = res.data.filter(transaction => transaction.fulfilled);
+            dispatch(setSoldTransactions(soldTransactions));
     })
     .catch( err => console.error(`setting sold transactions unsuccessful: ${err}`));
 }
+
+
+
+
 
 export const getAsRenterRatings = (id) => dispatch => {
     axios.get(`/api/userProfile/ratings/asRenter/${id}`)

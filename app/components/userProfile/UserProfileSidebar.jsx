@@ -10,7 +10,7 @@ export default function ({userId})  {
                                 <span className="nav-link">Account Information</span>
                                 </li></Link>
 
-                                <Link style={{textDecoration:'none'}}><li className="profile-nav-item"><i className="ion-document nav-icon"></i>
+                                <Link to={`/userProfile/${userId}/futureReservations`} style={{textDecoration:'none'}}><li className="profile-nav-item"><i className="ion-document nav-icon"></i>
                                 <span className="nav-link"> Reservations </span>
                                 </li></Link>
 

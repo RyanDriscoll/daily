@@ -11,6 +11,8 @@ import Signup from './components/Signup.jsx'
 import UserProfile from './components/UserProfile.jsx'
 import AccountInfoFormContainer from './components/userProfile/AccountInfoFormContainer.jsx'
 import TransactionHistory from './components/userProfile/TransactionHistory.jsx';
+import FutureReservations from './components/userProfile/FutureReservations.jsx';
+import AggregateRatings from './components/userProfile/AggregateRatings.jsx';
 
 import Sidebar from './components/Sidebar'
 import ProductsView from './components/ProductsView'
@@ -56,6 +58,8 @@ render (
         <Route path="userProfile/:id" component={UserProfile}>
           <Route path="accountInfo" component={AccountInfoFormContainer}/>
           <Route path="transactionHistory" component={TransactionHistory}/>
+          <Route path="futureReservations" component={FutureReservations}/>
+          <Route path="aggregateRatings" component={AggregateRatings}/>
         </Route>
         <Route path="login" component={Login}/>
         <Route path="review" component={ReviewsByUser}/>
