@@ -19,6 +19,23 @@ router.param('userId', (req, res, next) => {
     })
 });
 
+/* post a rating */
+router.post('/', (req, res, next) => {
+    const { reservationId, stars, text, type } = req.body;
+  Promise.all([Reservation.findById(reservationId),
+            Review.create({stars:stars, text:text})])
+   .then(([reservation, review]) => {
+       console.log('TYPE:', type);
+       if(type==='sellerReview'){
+        reservation.setSellerReview(review);
+       }
+       else if(type==='renterReview'){
+           reservation.setRenterReview(review);
+       }
+        res.send(reservation);
+   });
+});
+
 
 /* get all as renter ratings */
 router.get('/renter/:userId', (req, res, next) => {
@@ -57,18 +74,6 @@ router.get('/seller/:userId', (req, res, next) => {
     })
 })
 
-
-/* get all as renter pending reviews */
-router.get('/renter/:userId/pending', (req, res, next) => {
-    Reservation.findAll({
-        include: [{model: Product}, {model: Review, as:'sellerReview'}],
-        where: {renter_id: req.loggedInUser.id},
-        order: 'date DESC'
-    })
-    .then(pendingRenterReviews => {
-        res.send(pendingRenterReviews);
-    });
-})
 
 /* find all as seller pending reviews */
 router.get('/seller/:userId/pending', (req, res, next) => {

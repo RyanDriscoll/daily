@@ -1,24 +1,46 @@
 import React, {  Component } from 'react';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import { postReview } from '../../reducers/userProfile'
 
 
 
 
-export default class SingleReviewContainer extends Component {
+class SingleReviewContainer extends Component {
 
     constructor(props){
         super(props);
         this.state = {
-            rating: 0,
+            stars: 5,
             text: ''
         }
 
-        this.handleInput = this.handleInput.bind(this);
+        this.selectRating = this.selectRating.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleTextInput = this.handleTextInput.bind(this);
     }
 
-    handleInput(e){
+    selectRating(e){
+        this.setState({stars: e.target.value});
+    }
 
+    handleTextInput(e){
+        this.setState({text: e.target.value});
 
+    }
+
+    handleSubmit(e){
+        if(this.state.text.length < 10){
+            alert('Your review is too short, please write a longer review');
+        }
+        else {
+
+            this.props.postReview({
+                reservationId: this.props.transaction.id,
+                stars: this.state.stars,
+                text: this.state.text,
+            type: this.props.type}, this.props.userInfo.id);
+        }
     }
 
     render(){
@@ -36,20 +58,19 @@ export default class SingleReviewContainer extends Component {
                                     </div>
                                     <label> Rating </label>
                                     <span>
-                                    <select>
-                                        <option> 1 </option>
-                                        <option> 2 </option>
-                                         <option> 3 </option>
-                                          <option> 4 </option>
-                                           <option> 5 </option>
+                                     <select value={this.state.stars} className="ratingSelector" onChange={this.selectRating}>
+                                        <option value={1}>1</option>
+                                        <option value={2}>2</option>
+                                        <option value={3}>3</option>
+                                        <option value={4}>4</option>
+                                        <option value={5}>5</option>
                                     </select>
                                     </span>
                                     <div>
-                                     <textarea rows={4} cols={50} />
+                                     <textarea onChange={this.handleTextInput} rows={4} cols={50} />
                                      </div>
 
-                                     <button className="btn button-default">Submit</button>
-
+                                     <button className="btn button-default" onClick={this.handleSubmit}>Submit</button>
                             </div>
                 </li>
             </div>
@@ -57,3 +78,17 @@ export default class SingleReviewContainer extends Component {
     }
 
 }
+
+const mapStateToProps = (state, ownProps) => {
+    return {};
+}
+
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        postReview: (review, userId) => dispatch(postReview(review, userId))
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleReviewContainer);
