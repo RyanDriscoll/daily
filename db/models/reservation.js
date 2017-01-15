@@ -5,8 +5,11 @@ const db = require('APP/db');
 
 const Reservation = db.define('reservations', {
     date: Sequelize.DATEONLY,
-    order: Sequelize.INTEGER,
-    status: Sequelize.ENUM('carted', 'cancelled', 'completed')
+    order: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    status: Sequelize.ENUM('carted', 'canceled', 'completed')
   }, {
     hooks: {
       beforeBulkCreate: function(){
@@ -21,6 +24,9 @@ const Reservation = db.define('reservations', {
     getterMethods: {
       fulfilled: function() {
         return this.status === 'completed' && this.date < Date.now();
+      },
+      pendingReservation: function() {
+        return this.status === 'completed' && this.date > Date.now();
       }
     }
   });
