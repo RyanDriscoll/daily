@@ -6,14 +6,10 @@ export default function (props) {
     let pastSellingRatings = props.sellingRatings.map(rating=> {
         return rating.sellerReview;
     });
-        console.log('pastSellingRatings', pastSellingRatings);
 
     let pastRentingRatings = props.rentingRatings.map(rating=> {
         return rating.renterReview;
     })
-    console.log('pastRentingRatings', pastRentingRatings);
-
-
 
     return (
          <div>

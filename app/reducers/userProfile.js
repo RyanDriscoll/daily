@@ -74,6 +74,8 @@ export default function setUserInfoReducer (prevState = initialState, action){
 
 /* ------ dispatchers ------- */
 
+
+/* get user basic info */
 export const getUserInfo = (id) => dispatch => {
     axios.get(`/api/userProfile/${id}`)
     .then((res)=> {
@@ -83,7 +85,7 @@ export const getUserInfo = (id) => dispatch => {
     .catch( err => console.error(`setting user info unsuccessful: ${err}`));
 };
 
-
+/* update users info */
 export const updateUserInfo = (updateInfo) => dispatch => {
     axios.put(`/api/userProfile/`, updateInfo)
     .then((res)=> {
@@ -99,7 +101,6 @@ export const updateUserInfo = (updateInfo) => dispatch => {
 export const getRentedTransactions = (id) => dispatch => {
     axios.get(`/api/reservations/renter/${id}`)
     .then((res)=> {
-           console.log(`retrieving renter transactions: ${JSON.stringify(res)}`);
             const pendingReservations = res.data.filter(reservation => reservation.pendingReservation);
             dispatch(setPendingRentTransactions(pendingReservations));
             const pastReservations = res.data.filter(reservation => reservation.fulfilled);
@@ -113,7 +114,6 @@ export const getRentedTransactions = (id) => dispatch => {
 export const getSoldTransactions = (id) => dispatch => {
     axios.get(`/api/reservations/seller/${id}`)
     .then((res)=> {
-         console.log(`retrieving seller transactions: ${JSON.stringify(res)}`);
             const pendingSellingTransactions = res.data.filter(transaction => transaction.pendingReservation);
             dispatch(setPendingSellTransactions(pendingSellingTransactions));
             const soldTransactions = res.data.filter(transaction => transaction.fulfilled);
@@ -122,11 +122,11 @@ export const getSoldTransactions = (id) => dispatch => {
     .catch( err => console.error(`setting sold transactions unsuccessful: ${err}`));
 }
 
+/* aggregate ratings */
 
 export const getAsRenterRatings = (id) => dispatch => {
     axios.get(`/api/ratings/renter/${id}`)
     .then((res)=> {
-        console.log(`retrieving ratings as renter: ${JSON.stringify(res.data)}`);
             const rentingRatings = res.data.filter(reservation => reservation.renterReview );
             dispatch(setRentingRatings(rentingRatings));
     })
@@ -136,17 +136,17 @@ export const getAsRenterRatings = (id) => dispatch => {
 export const getAsSellerRatings = (id) => dispatch => {
     axios.get(`/api/ratings/seller/${id}`)
     .then((res)=> {
-        console.log(`retrieving ratings as seller: ${JSON.stringify(res.data)}`);
         const sellingRatings = res.data.filter(reservation => reservation.sellerReview);
         dispatch(setSellingRatings(sellingRatings));
     })
     .catch( err => console.error(`setting sold transactions unsuccessful: ${err}`));
 }
 
+/* pending reviews */
+
 export const getAsRenterPendingReview = (id) => dispatch => {
     axios.get(`/api/ratings/renter/${id}/pending`)
     .then((res)=> {
-        console.log(`retrieving AS RENTER PENDING REVIEW: ${JSON.stringify(res.data)}`);
         const asRenterPendingReview = res.data.filter(reservation => {
             return reservation.fulfilled && !reservation.sellerReview;
         })
@@ -158,13 +158,22 @@ export const getAsRenterPendingReview = (id) => dispatch => {
 export const getAsSellerPendingReview = (id) => dispatch => {
     axios.get(`/api/ratings/seller/${id}/pending`)
     .then((res)=> {
-        console.log(`retrieving AS SELLER PENDING REVIEW: ${JSON.stringify(res.data)}`);
         const asSellerPendingReview = res.data.filter(reservation => {
             return reservation.fulfilled && !reservation.renterReview;
         })
         dispatch(setAsSellerReview(asSellerPendingReview));
     })
     .catch( err => console.error(`setting sold transactions unsuccessful: ${err}`));
+}
+
+
+/* post review */
+export const postReview = (review, userId) => dispatch => {
+    axios.post(`/api/ratings`, review)
+    .then((res) => {
+        window.location.href=`/userProfile/${userId}/pendingReviews`
+    })
+    .catch( err => console.error(`post review unsuccessful: ${err}`));
 }
 
 

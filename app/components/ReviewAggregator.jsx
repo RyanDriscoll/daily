@@ -7,7 +7,6 @@ export default function Review(props) {
 
     let totalStars = ratings.reduce((initial, rating) => initial + rating.stars, 0);
     let averageRating = totalStars / ratings.length;
-    console.log('average Rating', averageRating)
 
     return(
         <div>

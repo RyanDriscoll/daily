@@ -6,8 +6,6 @@ import moment from 'moment';
 
 export default function (props) {
 
-    console.log('PROPS IN PENDING REVIEW:', props);
-
     return (
           <div className="col-md-12 transaction-container">
                             <label className="transaction-history-title"> Pending Reviews </label>
@@ -20,7 +18,7 @@ export default function (props) {
                                           </li>
                                           : props.pendingAsRenterReview.map(transaction => {
                                                 return (
-                                                    <SingleReviewContainer key={transaction.id} transaction={transaction} />
+                                                    <SingleReviewContainer key={transaction.id} transaction={transaction} {...props} type={"sellerReview"} />
                                                 )
                                         })}
                                     </ul>
@@ -34,7 +32,7 @@ export default function (props) {
                                           </li>
                                           : props.pendingAsSellerReview.map(transaction => {
                                                 return(
-                                                     <SingleReviewContainer key={transaction.id} transaction={transaction} />
+                                                     <SingleReviewContainer key={transaction.id} transaction={transaction} {...props} type={"renterReview"} />
                                                 )
                                         })}
                                 </ul>
