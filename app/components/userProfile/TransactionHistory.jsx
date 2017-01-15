@@ -3,7 +3,7 @@ import moment from 'moment';
 
 export default function (props)  {
     return (
-              <div className="col-sm-9 transaction-container">
+              <div className="col-md-12 transaction-container">
                             <label className="transaction-history-title"> Transaction History </label>
                             <div>
                                 <label className="transaction-history-label"> Renting History </label>
@@ -19,6 +19,7 @@ export default function (props)  {
                                                     <div>Product description: {transaction.product.description}</div>
                                                     <div>Address: {transaction.product.address},{transaction.product.city}, {transaction.product.state}, {transaction.product.zip}  </div>
                                                     <div> Price: ${transaction.product.price} </div>
+                                                    <div> <img src={transaction.product.img_url}/> </div>
                                                 </div></li>)
                                         })}
                                     </ul>
@@ -38,6 +39,7 @@ export default function (props)  {
                                                     <div>Product description: {transaction.product.description}</div>
                                                     <div>Address: {transaction.product.address},{transaction.product.city}, {transaction.product.state}, {transaction.product.zip}  </div>
                                                     <div> Price: ${transaction.product.price} </div>
+                                                    <div> <img src={transaction.product.img_url}/> </div>
                                                 </div></li>)
                                         })}
                                 </ul>

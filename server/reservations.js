@@ -6,44 +6,41 @@ const { User , Reservation , Review , Product } = require('APP/db/models');
 
 const router = require('express').Router();
 
-/* get all past reservations */
 
-router.get('/', (req, res, next) => {
-
-   res.json('reservations');
+router.param('userId', (req, res, next) => {
+    const { userId } = req.params;
+    User.findById(userId)
+    .then(user=> {
+        if(!user) res.send(404);
+        else {
+            req.loggedInUser = user;
+            next();
+        }
+    })
 });
 
+/* get all reservations as renter */
+router.get('/renter/:userId', (req, res, next) => {
+   Reservation.findAll({
+       include: [{model: Product}],
+       where: {renter_id: req.loggedInUser.id},
+       order: 'date DESC'
+   })
+   .then(reservations => {
+       res.send(reservations);
+   })
+});
 
-
-
-
-
-
-
-
+/* get all reservations as seller */
+router.get('/seller/:userId', (req, res, next) => {
+    Reservation.findAll({
+        include: [{model: Product, where: { seller_id: req.params.userId}}],
+        order: 'date DESC'
+    })
+    .then(reservations => {
+        res.send(reservations);
+    })
+})
 
 module.exports = router;
 
-// /* get user renting transactions */
-// router.get('/reservations/asRenter/:userId/', (req, res, next) => {
-//     Reservation.findAll({
-//         include: [{model: Product}],
-//         where: {renter_id: req.params.userId},
-//         order: 'date DESC'
-//     })
-//     .then(reservations => {
-//         res.send(reservations);
-//     });
-// });
-
-
-// /* get user selling transactions */
-// router.get('/reservations/asSeller/:userId/', (req, res, next) => {
-//     Reservation.findAll({
-//         include: [{model: Product, where: { seller_id: req.params.userId}}],
-//         order: 'date DESC'
-//     })
-//     .then(sellingTransactions => {
-//         res.send(sellingTransactions);
-//     });
-// });

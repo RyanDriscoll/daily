@@ -1,6 +1,7 @@
 import React , { Component } from 'react';
 import AccountInfoForm from './AccountInfoForm';
 import { connect } from 'react-redux';
+import { updateUserInfo } from '../../reducers/userProfile'
 
 class AccountInformationFormContainer extends Component {
     constructor(props){
@@ -14,6 +15,7 @@ class AccountInformationFormContainer extends Component {
             email: ''
         }
         this.handleInput = this.handleInput.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleInput(e){
@@ -22,7 +24,24 @@ class AccountInformationFormContainer extends Component {
 
     handleSubmit(e){
         e.preventDefault();
-        console.log('submitt button clicked')
+        if(this.state.oldPassword===''){
+            alert('Please fill in old password');
+        }
+        else if(this.state.newPassword!=='' && this.state.confirmNewPassword!==this.state.newPassword){
+            alert('new password did not match');
+        }
+        else if(this.state.newPassword==='' && this.state.firstName==='' && this.state.lastName===''){
+            alert('Please specify account information you would like to update');
+        }
+        else {
+            let updateInfo = {id: this.props.userInfo.id};
+            for(var key in this.state){
+                if(this.state[key]!==''){
+                    updateInfo[key] = this.state[key];
+                }
+            }
+            this.props.updateUserInfo(updateInfo);
+        }
     }
 
         render(){
@@ -30,7 +49,6 @@ class AccountInformationFormContainer extends Component {
                 <AccountInfoForm
                 handleInput={this.handleInput}
                 userInfo={this.props.userInfo}
-                {...this.state}
                 handleSubmit={this.handleSubmit}/>
             )
         }
@@ -46,8 +64,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-
-        }
+        updateUserInfo: (user) => dispatch(updateUserInfo(user))
+    }
 }
 
 

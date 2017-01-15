@@ -7,7 +7,9 @@ const initialState = {
     pendingRentTransactions: [],
     pendingSellTransactions: [],
     rentingRatings: [],
-    sellingRatings: []
+    sellingRatings: [],
+    pendingAsRenterReview: [],
+    pendingAsSellerReview: []
 }
 
 /* ------ actions ------- */
@@ -19,7 +21,8 @@ const SET_PENDING_RENT_TRANSACTIONS = 'SET_PENDING_RENT_TRANSACTIONS';
 const SET_PENDING_SELL_TRANSACTIONS = 'SET_PENDING_SELL_TRANSACTIONS';
 const SET_RENTING_RATINGS = 'SET_RENTING_RATINGS';
 const SET_SELLING_RATINGS = 'SET_SELLING_RATINGS';
-
+const SET_AS_RENTER_REVIEW = 'SET_AS_RENTER_REVIEW';
+const SET_AS_SELLER_REVIEW = 'SET_AS_SELLER_REVIEW';
 
 /* ------ action creators ------ */
 const setUserInfo = userInfo => ({ type: SET_USER_INFO, userInfo});
@@ -29,6 +32,8 @@ const setPendingRentTransactions = pendingRentTransactions => ({type: SET_PENDIN
 const setPendingSellTransactions = pendingSellTransactions => ({type: SET_PENDING_SELL_TRANSACTIONS, pendingSellTransactions});
 const setSellingRatings = sellingRatings => ({type: SET_SELLING_RATINGS, sellingRatings});
 const setRentingRatings = rentingRatings => ({type: SET_RENTING_RATINGS, rentingRatings});
+const setAsRenterReview = reviews => ({type: SET_AS_RENTER_REVIEW, reviews});
+const setAsSellerReview = reviews => ({type: SET_AS_SELLER_REVIEW, reviews});
 
 
 /* ------  set user info reducer ------ */
@@ -56,6 +61,12 @@ export default function setUserInfoReducer (prevState = initialState, action){
         case SET_SELLING_RATINGS:
             nextState.sellingRatings = action.sellingRatings;
             return nextState;
+        case SET_AS_RENTER_REVIEW:
+            nextState.pendingAsRenterReview = action.reviews;
+            return nextState;
+        case SET_AS_SELLER_REVIEW:
+            nextState.pendingAsSellerReview = action.reviews;
+            return nextState;
         default:
             return prevState;
     }
@@ -64,7 +75,7 @@ export default function setUserInfoReducer (prevState = initialState, action){
 /* ------ dispatchers ------- */
 
 export const getUserInfo = (id) => dispatch => {
-    axios.get(`/api/userProfile/id/${id}`)
+    axios.get(`/api/userProfile/${id}`)
     .then((res)=> {
         console.log(`retrieving user info: ${JSON.stringify(res)}`)
         dispatch(setUserInfo(res.data))
@@ -73,17 +84,20 @@ export const getUserInfo = (id) => dispatch => {
 };
 
 
-export const updateUserInfo = (id) => dispatch => {
-    axios.post(`/api/userProfile/update/`)
+export const updateUserInfo = (updateInfo) => dispatch => {
+    axios.put(`/api/userProfile/`, updateInfo)
     .then((res)=> {
-        console.log(`updating user info successful: ${res}`);
+        alert('update successful');
+        dispatch(setUserInfo(res.data))
     })
-    .catch( err => console.error(`updating user info unsuccessful: ${err}`));
+    .catch( err => {
+        alert('password is incorrect');
+        console.error(`updating user info unsuccessful: ${err}`)});
 };
 
 /* filter out pending and past transactions */
 export const getRentedTransactions = (id) => dispatch => {
-    axios.get(`/api/userProfile/reservations/asRenter/${id}`)
+    axios.get(`/api/reservations/renter/${id}`)
     .then((res)=> {
            console.log(`retrieving renter transactions: ${JSON.stringify(res)}`);
             const pendingReservations = res.data.filter(reservation => reservation.pendingReservation);
@@ -97,7 +111,7 @@ export const getRentedTransactions = (id) => dispatch => {
 
 /* filter out pending and past transactions */
 export const getSoldTransactions = (id) => dispatch => {
-    axios.get(`/api/userProfile/reservations/asSeller/${id}`)
+    axios.get(`/api/reservations/seller/${id}`)
     .then((res)=> {
          console.log(`retrieving seller transactions: ${JSON.stringify(res)}`);
             const pendingSellingTransactions = res.data.filter(transaction => transaction.pendingReservation);
@@ -109,24 +123,59 @@ export const getSoldTransactions = (id) => dispatch => {
 }
 
 
-
-
-
 export const getAsRenterRatings = (id) => dispatch => {
-    axios.get(`/api/userProfile/ratings/asRenter/${id}`)
+    axios.get(`/api/ratings/renter/${id}`)
     .then((res)=> {
-        console.log(`retrieving ratings as renter: ${JSON.stringify(res)}`);
-        dispatch(setRentingRatings(res.data));
+        console.log(`retrieving ratings as renter: ${JSON.stringify(res.data)}`);
+            const rentingRatings = res.data.filter(reservation => reservation.renterReview );
+            dispatch(setRentingRatings(rentingRatings));
     })
     .catch( err => console.error(`setting sold transactions unsuccessful: ${err}`));
 }
 
 export const getAsSellerRatings = (id) => dispatch => {
-    axios.get(`/api/userProfile/ratings/asSeller/${id}`)
+    axios.get(`/api/ratings/seller/${id}`)
     .then((res)=> {
-        console.log(`retrieving ratings as seller: ${JSON.stringify(res)}`);
-        dispatch(setSellingRatings(res.data));
+        console.log(`retrieving ratings as seller: ${JSON.stringify(res.data)}`);
+        const sellingRatings = res.data.filter(reservation => reservation.sellerReview);
+        dispatch(setSellingRatings(sellingRatings));
     })
     .catch( err => console.error(`setting sold transactions unsuccessful: ${err}`));
 }
+
+export const getAsRenterPendingReview = (id) => dispatch => {
+    axios.get(`/api/ratings/renter/${id}/pending`)
+    .then((res)=> {
+        console.log(`retrieving AS RENTER PENDING REVIEW: ${JSON.stringify(res.data)}`);
+        const asRenterPendingReview = res.data.filter(reservation => {
+            return reservation.fulfilled && !reservation.sellerReview;
+        })
+        dispatch(setAsRenterReview(asRenterPendingReview));
+    })
+    .catch( err => console.error(`setting sold transactions unsuccessful: ${err}`));
+}
+
+export const getAsSellerPendingReview = (id) => dispatch => {
+    axios.get(`/api/ratings/seller/${id}/pending`)
+    .then((res)=> {
+        console.log(`retrieving AS SELLER PENDING REVIEW: ${JSON.stringify(res.data)}`);
+        const asSellerPendingReview = res.data.filter(reservation => {
+            return reservation.fulfilled && !reservation.renterReview;
+        })
+        dispatch(setAsSellerReview(asSellerPendingReview));
+    })
+    .catch( err => console.error(`setting sold transactions unsuccessful: ${err}`));
+}
+
+
+
+
+
+
+
+
+
+
+
+
 

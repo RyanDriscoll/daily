@@ -5,7 +5,13 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import AccountInfoFormContainer from './userProfile/AccountInfoFormContainer.jsx';
 
-import { getUserInfo, getRentedTransactions, getSoldTransactions, getAsRenterRatings, getAsSellerRatings } from 'APP/app/reducers/userProfile';
+import { getUserInfo,
+    getRentedTransactions,
+    getSoldTransactions,
+    getAsRenterRatings,
+    getAsSellerRatings,
+    getAsRenterPendingReview,
+    getAsSellerPendingReview } from 'APP/app/reducers/userProfile';
 
 
 class UserProfile extends Component {
@@ -25,6 +31,8 @@ class UserProfile extends Component {
         this.props.getSoldTransactions(id);
         this.props.getAsRenterRatings(id);
         this.props.getAsSellerRatings(id);
+        this.props.getAsRenterPendingReview(id);
+        this.props.getAsSellerPendingReview(id);
     }
 
     aggregateRatings(ratings){
@@ -42,17 +50,17 @@ class UserProfile extends Component {
         const {id} = this.props.routeParams;
 
         return (
-            <div className="user-profile-page container container-fluid">
-                <div className="col-md-10 header-section">
+            <div className="col-md-10 user-profile-page container container-fluid" style={{padding: 0}}>
+                <div className="header-section">
                     <div className="profile-img-container">
                         <img className="profile-img"></img>
                     </div>
                     <div className="profile-header-quote">
-                        Some Text goes here.
+                        Welcome back to Dai.ly
                     </div>
                 </div>
 
-                <div className="user-profile-container container container-fluid">
+                <div className="col-md-12 user-profile-container container container-fluid" >
                     {this.props.children && React.cloneElement(this.props.children, Object.assign({}, this.props))}
                 </div>
             </div>
@@ -62,7 +70,9 @@ class UserProfile extends Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-    const { userInfo, rentedTransactions, soldTransactions, pendingRentTransactions, pendingSellTransactions, rentingRatings, sellingRatings } = state.userProfile;
+    const { userInfo, rentedTransactions, soldTransactions,
+        pendingRentTransactions, pendingSellTransactions, rentingRatings, sellingRatings,
+    pendingAsRenterReview, pendingAsSellerReview } = state.userProfile;
     return {
         userInfo,
         rentedTransactions,
@@ -71,6 +81,9 @@ const mapStateToProps = (state, ownProps) => {
         pendingSellTransactions,
         rentingRatings,
         sellingRatings,
+        pendingAsRenterReview,
+        pendingAsSellerReview
+
     };
 }
 
@@ -80,7 +93,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         getRentedTransactions: (id) => dispatch(getRentedTransactions(id)),
         getSoldTransactions: (id) => dispatch(getSoldTransactions(id)),
         getAsRenterRatings: (id) => dispatch(getAsRenterRatings(id)),
-        getAsSellerRatings: (id) => dispatch(getAsSellerRatings(id))
+        getAsSellerRatings: (id) => dispatch(getAsSellerRatings(id)),
+        getAsRenterPendingReview: (id) => dispatch(getAsRenterPendingReview(id)),
+        getAsSellerPendingReview: (id) => dispatch(getAsSellerPendingReview(id))
     }
 }
 

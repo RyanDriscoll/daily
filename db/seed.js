@@ -308,6 +308,7 @@ Review.create(review2)])
                       product.setSeller(user1),
                       product.setCategory(category1),
                       reservation.setRenter(user2),
+                      user2.setRenterReservations(reservation),
                       reservation.setProduct(product)
                       ])
 })}

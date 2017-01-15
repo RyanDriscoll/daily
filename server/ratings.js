@@ -6,51 +6,83 @@ const { User , Reservation , Review , Product } = require('APP/db/models');
 
 const router = require('express').Router();
 
-/* get all past reservations */
 
-router.get('/', (req, res, next) => {
-
-   res.json('ratings');
+router.param('userId', (req, res, next) => {
+    const { userId } = req.params;
+    User.findById(userId)
+    .then(user=> {
+        if(!user) res.send(404);
+        else {
+            req.loggedInUser = user;
+            next();
+        }
+    })
 });
 
 
+/* get all as renter ratings */
+router.get('/renter/:userId', (req, res, next) => {
+        Reservation.findAll({
+        include: [{model: Product}, {model: Review, as: 'renterReview'}],
+        where: { renter_id: req.loggedInUser.id},
+        order: 'date DESC'
+    })
+    .then(reviewedReservations=> {
+        res.send(reviewedReservations);
+        });
+});
+
+/* find all pending seller reviews */
+router.get('/renter/:userId/pending', (req, res, next) => {
+    Reservation.findAll({
+        include: [{model: Product}, {model: Review, as:'sellerReview'}],
+        where: {renter_id: req.loggedInUser.id},
+        order: 'date DESC'
+    })
+    .then(pendingRenterReviews => {
+        res.send(pendingRenterReviews);
+    });
+})
 
 
+/* get all as seller ratings */
+router.get('/seller/:userId', (req, res, next) => {
+    Reservation.findAll({
+        include: [{model: Product, where: {seller_id: req.loggedInUser.id}}
+        , {model: Review, as: 'sellerReview'}],
+        order: 'date DESC'
+    })
+    .then(reviewedReservations=> {
+        res.send(reviewedReservations);
+    })
+})
 
 
+/* get all as renter pending reviews */
+router.get('/renter/:userId/pending', (req, res, next) => {
+    Reservation.findAll({
+        include: [{model: Product}, {model: Review, as:'sellerReview'}],
+        where: {renter_id: req.loggedInUser.id},
+        order: 'date DESC'
+    })
+    .then(pendingRenterReviews => {
+        res.send(pendingRenterReviews);
+    });
+})
 
+/* find all as seller pending reviews */
+router.get('/seller/:userId/pending', (req, res, next) => {
+     Reservation.findAll({
+        include: [{model: Product, where: {seller_id: req.loggedInUser.id}}
+        , {model: Review, as: 'renterReview'}],
+        order: 'date DESC'
+    })
+    .then(pendingSellerReviews => {
+        res.send(pendingSellerReviews);
+    });
+})
 
 
 
 module.exports = router;
 
-
-// /* get users rating as renter */
-// /* find reservations renterId get its seller review */
-// router.get('/ratings/asRenter/:userId', (req, res, next) => {
-//     Reservation.findAll({
-//         include: [{model: Product}, {model: SellerReview}],
-//         where: { renter_id: req.params.userId},
-//         order: 'date DESC'
-//     })
-//     .then(reservations=> {
-//         //filter only if reservation is reviewed
-//         const reviewedReservations = reservations.filter(reservation => reservation.seller_review);
-//         res.send(reviewedReservations);
-//     })
-// });
-
-
-// /* get users rating as seller */
-// /* find product's sellerId and get renters review */
-// router.get('/ratings/asSeller/:userId', (req, res, next) => {
-//     Reservation.findAll({
-//         include: [{model: Product, where: {seller_id: req.params.userId}}
-//         , {model: RenterReview}],
-//         order: 'date DESC'
-//     })
-//     .then(reservations=> {
-//         const reviewedReserations = reservations.filter(reservation => reservation.renter_review );
-//         res.send(reviewedReserations);
-//     })
-// });
