@@ -14,6 +14,7 @@ import TransactionHistory from './components/userProfile/TransactionHistory.jsx'
 import FutureReservations from './components/userProfile/FutureReservations.jsx';
 import AggregateRatings from './components/userProfile/AggregateRatings.jsx';
 import PendingReviews from './components/userProfile/PendingReviews.jsx';
+import CategoriesAdmin from './components/userProfile/CategoriesAdmin.jsx';
 
 import Sidebar from './components/Sidebar'
 import ProductsView from './components/ProductsView'
@@ -63,6 +64,7 @@ render (
           <Route path="futureReservations" component={FutureReservations}/>
           <Route path="aggregateRatings" component={AggregateRatings}/>
           <Route path="pendingReviews" component={PendingReviews}/>
+          <Route path="categoriesAdmin" component={CategoriesAdmin}/>
         </Route>
         <Route path="login" component={Login}/>
         <Route path="review" component={ReviewsByUser}/>
