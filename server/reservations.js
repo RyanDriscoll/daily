@@ -42,5 +42,17 @@ router.get('/seller/:userId', (req, res, next) => {
     })
 })
 
+// post a reservation
+router.post('/', (req, res, next) => {
+    Reservation.create(req.body.reservation)
+    .then(newReservation => {
+        return Promise.all([newReservation.setProduct(req.body.product),
+        newReservation.setRenter(req.body.user),
+        newReservation.setSeller(req.body.product.getSeller())])
+    })
+    .then(updatedReservation => res.send(updatedReservation))
+    .catch(next);
+})
+
 module.exports = router;
 
