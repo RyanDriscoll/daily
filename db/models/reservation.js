@@ -3,7 +3,7 @@
 const Sequelize = require('sequelize');
 const db = require('APP/db');
 const Product = require('APP/db/models/product')
-const SellerReview = require('APP/db/models/sellerReview')
+
 
 
 const Reservation = db.define('reservations', {

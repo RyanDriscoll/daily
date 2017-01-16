@@ -188,55 +188,52 @@ const db = require('APP/db')
 //   .map(createObjs => User.create({ ... })))
 
 
-//   const callAllCreateFuncs = function(){
-//
-//     console.log ("IN CALL ALL CREATE FUNCS")
-//
-// for(var i = 0; i<100;i++){
-//     let counter = i+1
-//
-//  User.create(user())
-//     .then(function(user){
-//       console.log("USER CREATED", user)
-//       let reservationObj = reservation()
-//       let categoryObj = category()
-//       let productObj = product()
-//       let sellerReviewObj = sellerReview()
-//       let renterReviewObj = renterReview()
-//
-//       reservationObj.user_id = counter
-//       reservationObj.order = counter
-//       reservationObj.product_id = counter
-//       productObj.seller_id = counter
-//       productObj.category_id= counter
-//
-//       sellerReviewObj.reservation_id = counter
-//       renterReviewObj.reservation_id = counter
-//
-//       counter++
-//
-//
-//         Product.create(productObj)
-//         .then(()=>{
-//         Reservation.create(reservationObj)        })
-//         .then(()=>{
-//         Category.create(categoryObj)
-//         })
-//         .then(()=>{
-//
-//         SellerReview.create(sellerReviewObj)
-//         })
-//         .then(()=>{
-//         RenterReview.create(renterReviewObj)
-//       })
-//
-//     })
-//     .catch(function(err){
-//       console.log(err)
-//     })
-//     }
-//
-//     }
+  const callAllCreateFuncs = function(){
+
+    console.log ("IN CALL ALL CREATE FUNCS")
+
+for(var i = 0; i<100;i++){
+    let counter = i+1
+
+ User.create(user())
+    .then(function(user){
+      console.log("USER CREATED", user)
+      let reservationObj = reservation()
+      let categoryObj = category()
+      let productObj = product()
+
+      let reviewObj = renterReview()
+
+      reservationObj.user_id = counter
+      reservationObj.order = counter
+      reservationObj.product_id = counter
+      productObj.seller_id = counter
+      productObj.category_id= counter
+
+      reviewObj.reservation_id = counter
+
+      counter++
+
+
+        Product.create(productObj)
+        .then(()=>{
+        Reservation.create(reservationObj)        })
+        .then(()=>{
+        Category.create(categoryObj)
+        })
+        .then(()=>{
+        Review.create(sellerReviewObj)
+        })
+
+      })
+
+    })
+    .catch(function(err){
+      console.log(err)
+    })
+    }
+
+    }
 
 user1 = {
 firstName: "Spencer",

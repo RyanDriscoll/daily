@@ -3,6 +3,7 @@
 const Sequelize = require('sequelize');
 const db = require('APP/db');
 const Category = require('./category')
+const Review = require('./review')
 
 const Product = db.define('products', {
   name: Sequelize.STRING,
@@ -16,8 +17,10 @@ const Product = db.define('products', {
   img_url: Sequelize.STRING
 },{
   classMethods: {
-    getProductReviews: function(){
-      this.findAll({
+    getProductReviews: function(id){
+      this.findAll({where:
+        {id:id},
+        include: [{}]
 
       })
     }
