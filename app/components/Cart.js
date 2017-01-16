@@ -18,13 +18,20 @@ class Cart extends Component{
                 <h3>Here is your cart </h3>
                 <form id="new-cart-form" className="form-group" style={{marginTop: '20px'}} onSubmit={e => {
                     this.confirmPurchase(e);
-                    {/*browserHistory.push('/products');*/}
+                    browserHistory.push('/products');
                     }
                 }>
                     <div>
-                        {this.props.reservations.map(reservation => {
+                        <div>
+                            <div className="col-md-5"> Product ID</div>
+                            <div className="col-md-5"> Reservation Date</div>
+                        </div>
+                        {this.props.cart.map(reservation => {
                             return(
-                                <p key={reservation.id}>Here is the reservation ID (actually the categories ID): {reservation.id}</p>
+                                <div key={reservation.id}>
+                                    <div className="col-md-5">{reservation.product_id}</div>
+                                    <div className="col-md-5">{reservation.date.slice(0, 10)}</div>
+                                </div>
                                 )
 
                         }
@@ -45,15 +52,7 @@ class Cart extends Component{
 
     confirmPurchase(e){
         e.preventDefault();
-        // const user = {
-        //     firstName: e.target.firstName.value,
-        //     lastName: e.target.lastName.value,
-        //     email: e.target.email.value,
-        //     password: e.target.password.value
-        // }
-        //
-        console.log('got into confirmPurchase');
-        let cart = this.props.reservations  //this is an array of objects
+        let cart = this.props.cart
         axios.put('/api/reservations', cart)
     }
 
@@ -62,7 +61,7 @@ class Cart extends Component{
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        reservations: state.categories.categories
+        cart: state.reservations.cart
     };
 }
 

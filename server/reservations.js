@@ -43,22 +43,22 @@ router.get('/seller/:userId', (req, res, next) => {
 })
 
 
-function updateReservationStatusAndOrderNumber(reservations) {
-  let orderNum = Reservation.getLargestOrderNumber();
-    reservations.forEach( reservation =>
-               Reservation.findOne({where: {id: reservation.id}})
-                   .then(singleReservation => {
-                       singleReservation.status='completed';
-                       singleReservation.order=orderNum++;
-                   })
-           )
-
-}
-
-//update the reservation status to completed
+//update the reservation order number (to next available number) and status (to completed)
 router.put('/', (req, res, next) =>{
-    console.log('got into reservations router.put, here is req.body', req.body)
-    updateReservationStatusAndOrderNumber(req.body);
+    Reservation.getLargestOrderNumber()
+        .then((order)=> {
+            order++
+            req.body.forEach( reservation =>
+                Reservation.findOne({where: {id: reservation.id}})
+                    .then(singleReservation => {
+                        singleReservation.update({status: 'completed'})
+                        singleReservation.update({order: order})
+                    })
+            )
+        })
+        .then(res.sendStatus(200))
+        .catch(next)
+
 })
 
 
