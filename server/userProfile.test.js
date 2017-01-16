@@ -6,23 +6,47 @@ const app = require('./start')
 
 describe('/api/userProfile', () => {
 
-  describe('get user profile info', () => {
-    it('GET user id 1', () =>
-      request(app)
-        .get(`/api/userProfile/id/1`)
-        .expect(200)
-    )
+  let user1;
 
-    it('GET all user as renter reservations', () =>
-      request(app)
-        .get('/api/userProfile/reservations/asRenter/2')
-        .expect(200)
-    )
+  beforeEach(function () {
+    return User
+      .create({firstName: "alv", lastName: "yuen", password: "123", isAdmin: false, email: "alvin@alvin.com"})
+      .then((user) => {
+        user1 = user;
+      })
 
-    it('get all user as ', () =>
+  });
+
+  describe('get user profile', () => {
+    it('GET user info', () => {
       request(app)
-        .get('/api/userProfile/ratings/asRenter/2')
+        .get(`/api/userProfile/${user1.id}`)
         .expect(200)
-    )
-  })
+        .then((res) => {
+          expect(res.body.email)
+            .to
+            .equal(user1.email);
+        })
+    });
+  });
+
+  describe('update user profile', () => {
+    it('UPDATE user info', () => {
+      let userUpdate = {
+        password: "123",
+        email: "yuen@yuen.com"
+      }
+      request(app)
+        .put(`/api/userProfile/${user1.id}`)
+        .send(userUpdate)
+        .expect(200)
+        .then((res) => {
+          expect(res.body.email)
+            .to
+            .equal(userUpdate.email);
+        })
+
+    })
+  });
+
 })

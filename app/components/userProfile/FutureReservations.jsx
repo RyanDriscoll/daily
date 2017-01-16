@@ -4,11 +4,11 @@ import moment from 'moment';
 export default function (props)  {
     return (
               <div className="col-md-12 transaction-container">
-                            <label className="transaction-history-title"> Transaction History </label>
+                            <label className="transaction-history-title"> Reservations </label>
                             <div>
-                                <label className="transaction-history-label"> Renting History </label>
+                                <label className="transaction-history-label"> To Rent </label>
                                     <ul className="list-group">
-                                      {props.rentedTransactions.length=== 0 ?
+                                      {props.pendingRentTransactions.length=== 0 ?
                                           <li className="list-group-item">
                                             <div> No Renting History</div>
                                           </li>
@@ -26,13 +26,13 @@ export default function (props)  {
 
                             </div>
                             <div>
-                                <label className="transaction-history-label"> Selling History </label>
+                                <label className="transaction-history-label"> To Sell </label>
                                      <ul className="list-group">
-                                        {props.soldTransactions.length=== 0 ?
+                                        {props.pendingSellTransactions.length=== 0 ?
                                           <li className="list-group-item">
                                             <div> No Selling History</div>
                                           </li>
-                                          : props.soldTransactions.map(transaction => {
+                                          : props.pendingSellTransactions.map(transaction => {
                                                 return( <li key={transaction.id} className="list-group-item"><div>
                                                     <div> Date: {moment(transaction.date).format('MM-DD-YYYY')} </div>
                                                     <div>Product Name: {transaction.product.name} </div>

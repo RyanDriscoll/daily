@@ -9,7 +9,10 @@ api
   .use('/categories', require('./categories'))
   .use('/products', require('./products'))
   .use('/userProfile', require('./userProfile'))
-  .use('/reservation', require('./reservation'))
+
+  .use('/reservations', require('./reservations'))
+  .use('/ratings', require('./ratings'))
+
 
 
 // Send along any errors

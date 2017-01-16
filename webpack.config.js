@@ -2,7 +2,6 @@
 
 var webpack = require('webpack');
 
-
 module.exports = {
   entry: './app/main.jsx',
   output: {
@@ -24,7 +23,7 @@ module.exports = {
           presets: ['react', 'es2015', 'stage-2']
         }
       },
-      {
+            {
                 test: /\.css$/,
                 loader: "style!css?sourceMap!sass?sourceMap"
             }
