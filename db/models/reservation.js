@@ -7,10 +7,9 @@ const Product = require('APP/db/models/product')
 
 
 const Reservation = db.define('reservations', {
-    date: Sequelize.DATEONLY,
+    date: Sequelize.DATE,
     order: {
-      type: Sequelize.INTEGER,
-      allowNull: false
+      type: Sequelize.INTEGER
     },
     status: Sequelize.ENUM('carted', 'canceled', 'completed')
   }, {
@@ -18,9 +17,9 @@ const Reservation = db.define('reservations', {
       beforeBulkCreate: function(){
         Reservation.max('order')
         .then(orderNum=>{
-          this.update({
+          this.update({where: {
             order:orderNum
-          })
+          }})
         })
       }
     },
