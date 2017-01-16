@@ -46,12 +46,17 @@ router.get('/seller/:userId', (req, res, next) => {
 router.post('/', (req, res, next) => {
     Reservation.create(req.body.reservation)
     .then(newReservation => {
-        return Promise.all([newReservation.setProduct(req.body.product),
-        newReservation.setRenter(req.body.user),
-        newReservation.setSeller(req.body.product.getSeller())])
+        return newReservation.setProduct(req.body.product.id)
+        .then(res1 => res1.setRenter(req.body.user.id))
+        .then(res2 => {
+            return Promise.all([Product.findById(req.body.product.id), res2])
+            .then(([prod, res3]) => res3.setSeller(prod.seller_id))
+            .then((updatedReservation) => {
+                res.send(updatedReservation)
+            })
+            .catch(next);
+        })
     })
-    .then(updatedReservation => res.send(updatedReservation))
-    .catch(next);
 })
 
 module.exports = router;

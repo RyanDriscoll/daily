@@ -1,7 +1,8 @@
 import axios from 'axios'
+import store from '../store'
 
 const initialState = {
-    reservations: []
+    allReservations: []
 }
 const RECEIVE_RESERVATION = 'RECEIVE_RESERVATION';
 
@@ -12,13 +13,13 @@ export const receiveReservation = reservation => ({
 	reservation
 })
 
-export const makeReservation = (reservation, userId, productId) => {
+export const makeReservation = (reservation, user, product) => {
   return dispatch => {
-    axios.post(`/api/reservations`, {reservation, userId, productId})
+    axios.post(`/api/reservations`, {reservation, user, product})
     .then(response => {
       dispatch(receiveReservation(response.data));
     })
-    .catch(err => console.error(err))
+    .catch(err => console.error(err.stack))
   }
 };
 
@@ -26,7 +27,7 @@ const reducer = (state = initialState, action) => {
   let newState = Object.assign({}, state)
 	switch (action.type) {
 		case RECEIVE_RESERVATION:
-			newState.reservations = newState.reservations.push(action.reservation);
+      newState.allReservations.push(action.reservation)
       break;
     default:
       return state;

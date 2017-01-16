@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { SingleDatePicker } from 'react-dates';
 import { makeReservation } from '../reducers/reservation';
+import { store } from '../store';
 
 class Reservation extends Component {
     constructor(props) {
@@ -64,8 +65,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         addReservation: (reservation, user, product) => {
-            console.log("^^^^^^^^^", reservation, user, product);
-            dispatch => dispatch(makeReservation(reservation, user, product));
+            dispatch(makeReservation(reservation, user, product));
         }
     }
 }
