@@ -42,5 +42,24 @@ router.get('/seller/:userId', (req, res, next) => {
     })
 })
 
+function updateReservationStatusAndOrderNumber(reservations) {
+  let orderNum = Reservation.getLargestOrderNumber();
+    reservations.forEach( reservation =>
+               Reservation.findOne({where: {id: reservation.id}})
+                   .then(singleReservation => {
+                       singleReservation.status='completed';
+                       singleReservation.order=orderNum++;
+                   })
+           )
+
+}
+
+//update the reservation status to completed
+router.put('/', (req, res, next) =>{
+    console.log('got into reservations router.put, here is req.body', req.body)
+    updateReservationStatusAndOrderNumber(req.body);
+})
+
+
 module.exports = router;
 
