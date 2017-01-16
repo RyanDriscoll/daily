@@ -32,7 +32,7 @@ async function newCreateSeeds() {
         zip: '60007',
         price: 25,
         end_date: 2016 + '-' + Math.ceil(Math.random() * 100 / 12) + '-' + Math.ceil((Math.random()) * 100 / 4),
-        img_url: 'http://lorempixel.com/400/200/'
+        img_url: 'http://www.lampertlumber.com/wp-content/uploads/2015/03/Blog.png'
     }
 
     const product2 = {
@@ -44,7 +44,7 @@ async function newCreateSeeds() {
         zip: '60007',
         price: 1467,
         end_date: 2016 + '-' + Math.ceil(Math.random() * 100 / 12) + '-' + Math.ceil((Math.random()) * 100 / 4),
-        img_url: 'http://lorempixel.com/400/200/'
+        img_url: 'https://mudministry.org/missions/images/carsmash.jpg'
     }
 
     const reservation1 = {
