@@ -47,7 +47,7 @@ export const deleteCategory = (categoryId) => dispatch => {
   axios.delete(`/api/categories/${categoryId}`)
   .then(response => {
       console.log(`response from delete category: ${JSON.stringify(response)}`);
-      if(response.status==='200'){
+      if(response.status===200){
         dispatch(removeCategory(categoryId));
       }
   })
@@ -83,7 +83,10 @@ const reducer = (state = initialState, action) => {
       newState.categories = [...newState.categories, action.category]
       break;
     case REMOVE_CATEGORY:
-      console.log('remove category reducer');
+      let index;
+      newState.categories.forEach((category,i)=> {if(category.id === action.categoryId) index= i});
+      console.log('index:', index);
+      newState.categories = [...newState.categories.slice(0, index), ...newState.categories.slice(index+1, newState.categories.length)];
       break;
     default:
       return state;
