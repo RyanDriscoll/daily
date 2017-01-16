@@ -31,19 +31,25 @@ const Reservation = db.define('reservations', {
         return this.status === 'completed' && this.date > Date.now();
       }
     },
-    classMethods:{
-      getSellerAndProduct: function(reservationId){
-        console.log("IN CLASS METH RESERV")
-        return Reservation.findAll({
-          where:{
-            id: reservationId
-          },
-          include: [{model:Product}, {model: SellerReview}]
-        }).then(reservation=>{
 
-          return reservation
-        })
-        .catch(err=>console.log(err))
+    // classMethods:{
+      // getSellerAndProduct: function(reservationId){
+      //   console.log("IN CLASS METH RESERV")
+      //   return Reservation.findAll({
+      //     where:{
+      //       id: reservationId
+      //     },
+      //     include: [{model:Product}, {model: SellerReview}]
+      //   }).then(reservation=>{
+      //
+      //     return reservation
+      //   })
+      //   .catch(err=>console.log(err))
+
+    classMethods: {
+      getLargestOrderNumber: function(){
+        return Reservation.max('order')
+
       }
     }
   });
