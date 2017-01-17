@@ -1,15 +1,12 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { SingleDatePicker } from 'react-dates';
-import { makeReservation } from '../reducers/reservation';
-<<<<<<< HEAD
+import { makeReservation, getReservationsForProduct } from '../reducers/reservation';
 import axios from 'axios';
 import moment from 'moment';
-=======
 import { store } from '../store';
 import {browserHistory} from 'react-router';
 
->>>>>>> master
 
 class Reservation extends Component {
     constructor(props) {
@@ -21,32 +18,11 @@ class Reservation extends Component {
         }
     }
 
-    componentDidMount() {
-        // this.getBlockedDays();
-        console.log('$$$$$$$$',this.props.selectedProduct.id);
-        axios.get(`/api/reservations/${this.props.selectedProduct.id.toString()}`)
-        .then(response => response.data)
-        .then(reservations => reservations.map(res => moment(res.date)))
-        .then(dateArr => {
-            console.log(dateArr)
-            this.setState({
-            blockedDays: dateArr
-        })})
-    }
-
-    // getBlockedDays() {
-        // axios.get(`/api/reservations`)
-        // .then(response => response.data)
-        // .then(reservations => reservations.map(res => res.date))
-        // .then(dateArr => {
-        //     console.log(dateArr)
-        //     this.setState({
-        //     blockedDays: dateArr
-        // })})
-    // }
 
     render(){
         const product = this.props.selectedProduct;
+        const blockedDays = this.props.blockedDays;
+        console.log(blockedDays);
         let user;
         if(this.props.auth){
             user = this.props.auth;
@@ -74,7 +50,17 @@ class Reservation extends Component {
                         focused={this.state.focused}
                         onDateChange={(date) => { this.setState({ date }); }}
                         onFocusChange={({ focused }) => { this.setState({ focused }); }}
-                        // isDayBlocked={(day) => }
+                        isDayBlocked={(day) => {
+                            // console.log(moment(day).isSame(moment('2017-01-18'), 'day'), day)
+                            for (let i = 0; i < blockedDays.length; i++){
+                                    // console.log('same day', day, blockedDays[i]);
+                                    // console.log('is it blocked?', day.isSame(blockedDays[i]._i.slice(0,10), 'day'), blockedDays[i]._i.slice(0, 10))
+                                if (day.isSame(blockedDays[i], 'day')) {
+
+                                    return true;
+                                }
+                            }
+                        }}
                     />
                     <button id="reservation-submit" type="submit" form="new-reservation-form" value="Submit"
                             className="btn btn-primary btn-block">
@@ -90,7 +76,8 @@ class Reservation extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         auth: state.auth,
-        selectedProduct: state.products.selectedProduct
+        selectedProduct: state.products.selectedProduct,
+        blockedDays: state.reservations.blockedDays
     };
 }
 
@@ -100,6 +87,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         addReservation: (reservation, user, product) => {
             dispatch(makeReservation(reservation, user, product));
+        },
+        getBlockedDays: (productId) => {
+            dispatch(getReservationsForProduct(productId));
         }
     }
 }

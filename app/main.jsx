@@ -26,6 +26,7 @@ import PostProduct from './components/PostProduct'
 
 import {getProducts} from './reducers/products'
 import {getSingleProduct} from './reducers/products'
+import {getReservationsForProduct} from './reducers/reservation'
 
 
 
@@ -47,6 +48,7 @@ const onProductsEnter = (nextRouterState)=>{
 const onProductEnter=nextRouterState=>{
   const productId = nextRouterState.params.productId;
   store.dispatch(getSingleProduct(productId))
+  store.dispatch(getReservationsForProduct(productId))
 }
 
 render (
