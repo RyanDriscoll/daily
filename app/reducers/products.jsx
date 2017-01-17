@@ -2,7 +2,8 @@ import axios from 'axios'
 
 const initialState = {
     allProducts: [],
-    selectedProduct: {}
+    selectedProduct: {},
+    selectedProductRatings:[]
 }
 const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS'
 
@@ -15,6 +16,15 @@ export const receiveProducts = (products) =>{
 }
 
 
+const RECEIVE_PRODUCT_RATINGS = 'RECEIVE_PRODUCT_RATINGS'
+
+export const receiveProductRatings = (ratings)=>{
+  return {
+    type: RECEIVE_PRODUCT_RATINGS,
+    ratings: ratings
+  }
+}
+
 const RECEIVE_PRODUCT = 'RECEIVE_PRODUCT'
 
 /*-----action-creator single products-----*/
@@ -24,6 +34,20 @@ export const receiveProduct = (product) =>{
     product: product
   }
 }
+
+
+
+const SET_PRODUCT_ACTIVE_FALSE = 'SET_PRODUCT_ACTIVE_FALSE'
+
+/*-----action-creator remove product by user ----- */
+export const setProductActiveFalse= (productId) => {
+  return {
+    type: SET_PRODUCT_ACTIVE_FALSE,
+    productId
+  }
+}
+
+
 
 /*-----gets all products-----*/
 export const getProducts = () =>dispatch=>{
@@ -39,6 +63,20 @@ export const getProducts = () =>dispatch=>{
       })
 
 }
+
+
+
+/*---- delete product ------ */
+export const deleteProduct = (productId) => dispatch => {
+  axios.delete(`/api/products/${productId}`)
+    .then(response => {
+      console.log(`delete a product, ${response.data}`);
+      if(response.data){
+        dispatch(setProductActiveFalse(productId));
+      }
+    })
+}
+
 
 /*-----gets a single product-----*/
 export const getSingleProduct = (productId) =>dispatch=>{
@@ -65,9 +103,29 @@ export const postProduct = (product) => {
 }
 
 
+export const getProductReview = (productId)=>{
+  return dispatch => {
+  axios.get(`/api/products/${productId}/reviews`)
+    .then(response=>{
+      console.log("RDATA", response.data)
+      return response.data})
+    .then(reviews=>{
+      console.log("IN GPR", reviews)
+      let newReviews = reviews.map(reviewObj=>{
+        return reviewObj.sellerReview
+      })
+      console.log("REVIEW ARR", reviews)
+      return dispatch(receiveProductRatings(newReviews))
+    })
+      .catch(err => console.error(err))
+}
+}
+
+
 /*-----products reducer-----*/
 export default function(state = initialState, action) {
     let newState = Object.assign({}, state)
+    let index;
     switch (action.type) {
         case RECEIVE_PRODUCTS:
             newState.allProducts =  action.products;
@@ -75,6 +133,17 @@ export default function(state = initialState, action) {
 
         case RECEIVE_PRODUCT:
           newState.selectedProduct = action.product
+          break;
+
+
+        case SET_PRODUCT_ACTIVE_FALSE:
+          let length = newState.allProducts.length;
+          index = newState.allProducts.findIndex(product=> product.id===action.productId);
+          newState.allProducts = [...newState.allProducts.slice(0,index), Object.assign({}, newState.allProducts[index], {active: false}), ...newState.allProducts.slice(index+1, length)]
+          break;
+
+        case RECEIVE_PRODUCT_RATINGS:
+          newState.selectedProductRatings = action.ratings
           break;
 
         default:

@@ -55,7 +55,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) =>{
   return {
-    addProducts: (dispatch=>(dispatch(getProducts())))
+    addProducts: productId=>
+     (dispatch=>(dispatch(getSingleProduct(productId))))
+
     }
   }
 

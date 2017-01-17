@@ -7,13 +7,12 @@ export default (props) => {
   const { id } =  props.params;
   return (
 
-    <sidebar className="col-md-2">
+    <sidebar className="col-xs-2">
       {
-        props.location.pathname.startsWith('/userProfile') ? <UserProfileSidebar userId={id}  /> : <Categories />
+        props.location.pathname.startsWith('/userProfile') ? <UserProfileSidebar {...props.user} userId={id}  /> : <Categories />
       }
 
     </sidebar>
-
 
   )
 }

@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { SingleDatePicker } from 'react-dates';
-import { makeReservation } from '../reducers/reservation';
+import { makeReservation, getReservationsForProduct } from '../reducers/reservation';
+import axios from 'axios';
+import moment from 'moment';
 import { store } from '../store';
 import {browserHistory} from 'react-router';
 
@@ -11,22 +13,24 @@ class Reservation extends Component {
         super(props)
         this.state = {
             date: null,
-            focused: false
+            focused: false,
+            blockedDays: []
         }
     }
 
+
     render(){
-        console.log('props', this.props);
-        console.log('state', this.state);
         const product = this.props.selectedProduct;
+        const blockedDays = this.props.blockedDays;
+        console.log(blockedDays);
         let user;
         if(this.props.auth){
             user = this.props.auth;
         }
         else{user = 'guest'};
         return(
-            <div>
-                <div>Reservation</div>
+            <div className="col-xs-4">
+                <h1>Reservation</h1>
                 <form id="new-reservation-form" className="form-group" style={{marginTop: '20px'}} onSubmit={e => {
                     e.preventDefault();
                     const res = {
@@ -46,6 +50,17 @@ class Reservation extends Component {
                         focused={this.state.focused}
                         onDateChange={(date) => { this.setState({ date }); }}
                         onFocusChange={({ focused }) => { this.setState({ focused }); }}
+                        isDayBlocked={(day) => {
+                            // console.log(moment(day).isSame(moment('2017-01-18'), 'day'), day)
+                            for (let i = 0; i < blockedDays.length; i++){
+                                    // console.log('same day', day, blockedDays[i]);
+                                    // console.log('is it blocked?', day.isSame(blockedDays[i]._i.slice(0,10), 'day'), blockedDays[i]._i.slice(0, 10))
+                                if (day.isSame(blockedDays[i], 'day')) {
+
+                                    return true;
+                                }
+                            }
+                        }}
                     />
                     <button id="reservation-submit" type="submit" form="new-reservation-form" value="Submit"
                             className="btn btn-primary btn-block">
@@ -61,7 +76,8 @@ class Reservation extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         auth: state.auth,
-        selectedProduct: state.products.selectedProduct
+        selectedProduct: state.products.selectedProduct,
+        blockedDays: state.reservations.blockedDays
     };
 }
 
@@ -71,6 +87,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         addReservation: (reservation, user, product) => {
             dispatch(makeReservation(reservation, user, product));
+        },
+        getBlockedDays: (productId) => {
+            dispatch(getReservationsForProduct(productId));
         }
     }
 }

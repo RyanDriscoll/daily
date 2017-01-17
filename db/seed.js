@@ -115,6 +115,9 @@ async function newCreateSeeds() {
 
     res1.setSellerReview(sellerreview1);
     res1.setRenterReview(renterreview1);
+
+    renterreview1.setProduct(p1);
+    sellerreview1.setProduct(p1);
 }
 
 

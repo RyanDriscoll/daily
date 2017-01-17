@@ -16,12 +16,12 @@ export default function (props) {
             <div> Rating as Seller </div>
             {pastSellingRatings.length === 0 ?
                 <div> No Ratings available </div> :
-                 <ReviewAggregator ratings={pastSellingRatings}/>
+                 <ReviewAggregator size={80} ratings={pastSellingRatings}/>
              }
              <div> Rating as Buyer </div>
              {pastRentingRatings.length === 0 ?
                  <div> No Ratings available </div> :
-                <ReviewAggregator ratings={pastRentingRatings}/>}
+                <ReviewAggregator size={80} ratings={pastRentingRatings}/>}
 
 
         </div>

@@ -5,11 +5,14 @@ import ReactStars from 'react-stars'
 
 
 export default function Review(props) {
+
+
     let reviews = props.review;
+    console.log("REVIEWS", props.review)
 
 
 
-    console.log('props.review in review', props.review)
+
 
     return(
         <div className='col-md-10'>
@@ -36,4 +39,3 @@ export default function Review(props) {
     )
 
 }
-

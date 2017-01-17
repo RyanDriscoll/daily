@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const Product = require('APP/db/models/product')
+const Review = require('APP/db/models/review')
+const Reservation = require('APP/db/models/reservation')
 
 
 router.get('/', (req, res, next) => {
@@ -19,13 +21,54 @@ router.post('/', (req, res, next) => {
 
 router.get('/:productId', (req, res, next) => {
 	let productId = req.params.productId
+	console.log("productID", productId)
 	return Product.findById(productId)
-		.then(products => {
-			res.json(products)
+		.then(product => {
+			res.json(product)
 		})
 		.catch(next)
 })
 
 
-module.exports = router
+/*get all products of user */
+router.get('/users/:userId', (req, res, next) => {
+	Product.findAll({
+		where: {seller_id: req.params.userId}
+	})
+	.then(products => {
+		res.json(products);
+	})
+	.catch(next);
+})
 
+/* delete a product */
+router.delete('/:productId', (req, res, next) => {
+	Product.update({
+		active: false},
+		{where: { id: req.params.productId}
+	})
+	.then(product => {
+		res.json(product);
+	})
+	.catch(next);
+});
+
+
+router.get('/:productId/reviews', (req, res, next) => {
+	let productId = req.params.productId
+	console.log("productID", productId)
+	return Reservation.findAll({
+		where:{
+			product_id: productId},
+			include: [{model: Review, as: "sellerReview"}]
+		})
+		.then(reservation => {
+			console.log("PRODUCTS WITH RESERVATION", reservation)
+			res.json(reservation)
+		})
+		.catch(next)
+})
+
+
+
+module.exports = router
