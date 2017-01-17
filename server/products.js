@@ -29,6 +29,31 @@ router.get('/:productId', (req, res, next) => {
 		.catch(next)
 })
 
+
+/*get all products of user */
+router.get('/users/:userId', (req, res, next) => {
+	Product.findAll({
+		where: {seller_id: req.params.userId}
+	})
+	.then(products => {
+		res.json(products);
+	})
+	.catch(next);
+})
+
+/* delete a product */
+router.delete('/:productId', (req, res, next) => {
+	Product.update({
+		active: false},
+		{where: { id: req.params.productId}
+	})
+	.then(product => {
+		res.json(product);
+	})
+	.catch(next);
+});
+
+
 router.get('/:productId/reviews', (req, res, next) => {
 	let productId = req.params.productId
 	console.log("productID", productId)
@@ -43,6 +68,7 @@ router.get('/:productId/reviews', (req, res, next) => {
 		})
 		.catch(next)
 })
+
 
 
 module.exports = router

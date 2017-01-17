@@ -9,11 +9,10 @@ export default (props) => {
 
     <sidebar className="col-xs-2">
       {
-        props.location.pathname.startsWith('/userProfile') ? <UserProfileSidebar userId={id}  /> : <Categories />
+        props.location.pathname.startsWith('/userProfile') ? <UserProfileSidebar {...props.user} userId={id}  /> : <Categories />
       }
 
     </sidebar>
-
 
   )
 }

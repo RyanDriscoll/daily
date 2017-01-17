@@ -35,6 +35,20 @@ export const receiveProduct = (product) =>{
   }
 }
 
+
+
+const SET_PRODUCT_ACTIVE_FALSE = 'SET_PRODUCT_ACTIVE_FALSE'
+
+/*-----action-creator remove product by user ----- */
+export const setProductActiveFalse= (productId) => {
+  return {
+    type: SET_PRODUCT_ACTIVE_FALSE,
+    productId
+  }
+}
+
+
+
 /*-----gets all products-----*/
 export const getProducts = () =>dispatch=>{
   axios.get('/api/products')
@@ -49,6 +63,20 @@ export const getProducts = () =>dispatch=>{
       })
 
 }
+
+
+
+/*---- delete product ------ */
+export const deleteProduct = (productId) => dispatch => {
+  axios.delete(`/api/products/${productId}`)
+    .then(response => {
+      console.log(`delete a product, ${response.data}`);
+      if(response.data){
+        dispatch(setProductActiveFalse(productId));
+      }
+    })
+}
+
 
 /*-----gets a single product-----*/
 export const getSingleProduct = (productId) =>dispatch=>{
@@ -96,6 +124,7 @@ export const getProductReview = (productId)=>{
 /*-----products reducer-----*/
 export default function(state = initialState, action) {
     let newState = Object.assign({}, state)
+    let index;
     switch (action.type) {
         case RECEIVE_PRODUCTS:
             newState.allProducts =  action.products;
@@ -103,6 +132,13 @@ export default function(state = initialState, action) {
 
         case RECEIVE_PRODUCT:
           newState.selectedProduct = action.product
+          break;
+
+
+        case SET_PRODUCT_ACTIVE_FALSE:
+          let length = newState.allProducts.length;
+          index = newState.allProducts.findIndex(product=> product.id===action.productId);
+          newState.allProducts = [...newState.allProducts.slice(0,index), Object.assign({}, newState.allProducts[index], {active: false}), ...newState.allProducts.slice(index+1, length)]
           break;
 
         case RECEIVE_PRODUCT_RATINGS:
