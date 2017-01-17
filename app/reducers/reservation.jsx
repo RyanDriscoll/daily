@@ -22,13 +22,13 @@ export const receiveBlockedDays = blockedDays => ({
 })
 
 export const makeReservation = (reservation, user, product) => {
-  return dispatch => {
-    axios.post(`/api/reservations`, {reservation, user, product})
-    .then(response => {
-      dispatch(receiveReservation(response.data));
-    })
-    .catch(err => console.error(err.stack))
-  }
+    return dispatch => {
+        axios.post(`/api/reservations`, {reservation, user, product})
+            .then(response => {
+                dispatch(receiveReservation(response.data));
+            })
+            .catch(err => console.error(err.stack))
+    }
 };
 
 export const getReservationsForProduct = (productId) => {
@@ -43,17 +43,47 @@ export const getReservationsForProduct = (productId) => {
   }
 }
 
+const CLEAR_CART = 'CLEAR_CART';
 
+export const clearCartSynchronousFunction = function (cart) {
+    return{
+        type: CLEAR_CART,
+        cart
+    }
+}
+
+export const clearCart = (cart) => {
+    return dispatch => {
+        axios.put('/api/reservations', cart)
+            .then( response => {
+                dispatch(clearCartSynchronousFunction(cart))
+            })
+            .catch(err => console.error(err.stack))
+    }
+}
+
+
+
+
+>>>>>>> master
 const reducer = (state = initialState, action) => {
   let newState = Object.assign({}, state)
 	switch (action.type) {
 		case RECEIVE_RESERVATION:
+<<<<<<< HEAD
       newState.cart.push(action.reservation)
       break;
     case RECEIVE_BLOCKED_DAYS:
       newState.blockedDays = newState.blockedDays.concat(action.blockedDays)
       console.log("newState",newState)
       break;
+=======
+            newState.cart.push(action.reservation)
+            break;
+        case CLEAR_CART:
+            newState.cart=[];
+            break;
+>>>>>>> master
     default:
       return state;
 	}

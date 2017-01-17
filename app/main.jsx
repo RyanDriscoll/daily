@@ -28,6 +28,8 @@ import {getProducts} from './reducers/products'
 import {getSingleProduct} from './reducers/products'
 import {getReservationsForProduct} from './reducers/reservation'
 
+import OrderComplete from './components/OrderComplete'
+
 
 
 const ExampleApp = connect(
@@ -71,6 +73,7 @@ render (
         <Route path="review" component={ReviewsByUser}/>
         <Route path="post" component={PostProduct}/>
         <Route path="cart" component={Cart}/>
+        <Route path="orderComplete" component={OrderComplete}/>
 
       <IndexRedirect to="/products" />
       </Route>
