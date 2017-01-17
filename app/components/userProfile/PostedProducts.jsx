@@ -22,11 +22,10 @@ class PostedProducts extends Component {
     }
 
     render(){
-        console.log('productsByUser::', this.props.productsByUser);
         return (
-            <div>
+            <div className="posted-product-container">
                     <table className = "table table-striped">
-                        <caption>Products</caption>
+                        <caption className="posted-product-caption">Products</caption>
                         <thead>
                             <tr>
                                 <th>Name</th>

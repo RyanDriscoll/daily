@@ -30,7 +30,7 @@ export default function ({userId, isAdmin})  {
 
                                 {isAdmin ?
                                 <Link to={`/userProfile/${userId}/categoriesAdmin`} style={{textDecoration:'none'}}><li className="profile-nav-item"><i className="ion-person-add nav-icon"></i>
-                                <span className="nav-link"> Categories Management </span>
+                                <span className="nav-link"> Categories  </span>
                                 </li></Link>
                                 : null }
 

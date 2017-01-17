@@ -12,18 +12,25 @@ export default function (props) {
     })
 
     return (
-         <div>
-            <div> Rating as Seller </div>
+         <div className="aggregate-rating-container list-group">
+            <div className="col-md-6">
+            <div className="rating-label"> Rating as Seller </div>
             {pastSellingRatings.length === 0 ?
-                <div> No Ratings available </div> :
-                 <ReviewAggregator size={80} ratings={pastSellingRatings}/>
+                <div className="no-rating-label"> No Ratings available </div> :
+                <div className="rating-stars">
+                 <ReviewAggregator  size={80} ratings={pastSellingRatings}/>
+                 </div>
              }
-             <div> Rating as Buyer </div>
+             </div>
+
+             <div className="col-md-6">
+             <div className="rating-label"> Rating as Renter </div>
              {pastRentingRatings.length === 0 ?
-                 <div> No Ratings available </div> :
-                <ReviewAggregator size={80} ratings={pastRentingRatings}/>}
-
-
+                 <div className="no-rating-label"> No Ratings available </div> :
+                <div className="rating-stars">
+                <ReviewAggregator className="rating-stars" size={80} ratings={pastRentingRatings}/>
+                </div>}
+            </div>
         </div>
     )
 }

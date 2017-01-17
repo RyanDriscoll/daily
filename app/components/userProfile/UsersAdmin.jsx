@@ -26,9 +26,9 @@ class UsersAdmin extends Component {
 
     render(){
         return (
-            <div>
+            <div className="user-admin-container">
                     <table className = "table table-striped">
-                        <caption>Users</caption>
+                        <caption className="user-admin-caption">Users</caption>
                         <thead>
                             <tr>
                                 <th>First Name</th>
