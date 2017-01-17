@@ -41,7 +41,7 @@ sidebar {
   top: 50px;
   padding: 0 !important;
   background: #303030;
-  height: calc(100vh - 50px);
+  height: 3000px;
   width: inherit;
   overflow-y: auto;
   border-right: 2px solid #555;
@@ -61,12 +61,17 @@ sidebar {
     margin-top: 100px;
 }
 
-.productView {
+/*.productView {
   padding-top: 150px;
   margin-left: 75px;
 
-}
+}*/
 
+.product-view {
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin-left: 5px;
+}
 
 .reservationView {
   padding-top: 150px;
@@ -87,3 +92,8 @@ sidebar {
   height: 48px;
   border-radius: 0px;
 }
+
+#single-product {
+  width: 100%;
+}
+
