@@ -42,5 +42,42 @@ router.get('/seller/:userId', (req, res, next) => {
     })
 })
 
+
+//update the reservation order number (to next available number) and status (to completed)
+router.put('/', (req, res, next) =>{
+    Reservation.getLargestOrderNumber()
+        .then((order)=> {
+            order++
+            req.body.forEach( reservation =>
+                Reservation.findOne({where: {id: reservation.id}})
+                    .then(singleReservation => {
+                        singleReservation.update({status: 'completed'})
+                        singleReservation.update({order: order})
+                    })
+            )
+        })
+        .then(res.sendStatus(200))
+        .catch(next)
+
+})
+
+
+// post a reservation
+router.post('/', (req, res, next) => {
+    Reservation.create(req.body.reservation)
+    .then(newReservation => {
+        return newReservation.setProduct(req.body.product.id)
+        .then(res1 => res1.setRenter(req.body.user.id))
+        .then(res2 => {
+            return Promise.all([Product.findById(req.body.product.id), res2])
+            .then(([prod, res3]) => res3.setSeller(prod.seller_id))
+            .then((updatedReservation) => {
+                res.send(updatedReservation)
+            })
+            .catch(next);
+        })
+    })
+})
+
 module.exports = router;
 

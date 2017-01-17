@@ -170,7 +170,6 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         post: function(product){
-          console.log('$$$$$$$$$$$$', product)
             dispatch(postProduct(product));
         }
     }

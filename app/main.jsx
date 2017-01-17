@@ -8,6 +8,7 @@ import Login from './components/Login.jsx'
 import WhoAmI from './components/WhoAmI'
 import Navbar from './components/Navbar'
 import Signup from './components/Signup.jsx'
+import Cart from './components/Cart'
 import UserProfile from './components/UserProfile.jsx'
 import AccountInfoFormContainer from './components/userProfile/AccountInfoFormContainer.jsx'
 import TransactionHistory from './components/userProfile/TransactionHistory.jsx';
@@ -71,6 +72,7 @@ render (
         <Route path="login" component={Login}/>
         <Route path="review" component={ReviewsByUser}/>
         <Route path="post" component={PostProduct}/>
+        <Route path="cart" component={Cart}/>
 
       <IndexRedirect to="/products" />
       </Route>
