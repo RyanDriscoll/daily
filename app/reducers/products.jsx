@@ -65,7 +65,7 @@ export const getSingleProduct = (productId) =>dispatch=>{
 
 }
 
-/*-----products reducer-----*/
+/*-----post a product-----*/
 export const postProduct = (product) => {
   return dispatch => {
   axios.post(`/api/products`, product)
@@ -79,18 +79,17 @@ export const getProductReview = (productId)=>{
   return dispatch => {
   axios.get(`/api/products/${productId}/reviews`)
     .then(response=>{
-      console.log("RDATA", response.data)
       return response.data})
     .then(reviews=>{
-      console.log("IN GPR", reviews)
-      let newReviews = reviews.map(reviewObj=>{
-        return reviewObj.sellerReview
+      let newReviews = reviews.filter(reviewObj=>{
+        if (reviewObj.sellerReview) {
+          return true
+        }
       })
-      console.log("REVIEW ARR", reviews)
       return dispatch(receiveProductRatings(newReviews))
     })
       .catch(err => console.error(err))
-}
+  }
 }
 
 
