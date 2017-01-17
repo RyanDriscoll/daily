@@ -25,6 +25,8 @@ export const receiveProductRatings = (ratings)=>{
   }
 }
 
+
+
 const RECEIVE_PRODUCT = 'RECEIVE_PRODUCT'
 
 /*-----action-creator single products-----*/
@@ -109,10 +111,12 @@ export const getProductReview = (productId)=>{
     .then(response=>{
       return response.data})
     .then(reviews=>{
+
       let newReviews = reviews.filter(reviewObj=>{
-        if (reviewObj.sellerReview) {
+        if (reviewObj.renterReview) {
           return true
         }
+        console.log("NEW REVIEWS", newReviews)
       })
       return dispatch(receiveProductRatings(newReviews))
     })
