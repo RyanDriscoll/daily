@@ -15,6 +15,7 @@ import FutureReservations from './components/userProfile/FutureReservations.jsx'
 import AggregateRatings from './components/userProfile/AggregateRatings.jsx';
 import PendingReviews from './components/userProfile/PendingReviews.jsx';
 import CategoriesAdmin from './components/userProfile/CategoriesAdmin.jsx';
+import UsersAdmin from './components/userProfile/UsersAdmin.jsx';
 
 import Sidebar from './components/Sidebar'
 import ProductsView from './components/ProductsView'
@@ -35,7 +36,7 @@ const ExampleApp = connect(
   ({ user, children, router }) =>
     <div>
       <Navbar user={user} />
-      <Sidebar location={router.location} params={router.params} />
+      <Sidebar user={user} location={router.location} params={router.params} />
       {children}
     </div>
 )
@@ -65,6 +66,7 @@ render (
           <Route path="aggregateRatings" component={AggregateRatings}/>
           <Route path="pendingReviews" component={PendingReviews}/>
           <Route path="categoriesAdmin" component={CategoriesAdmin}/>
+          <Route path="usersAdmin" component={UsersAdmin}/>
         </Route>
         <Route path="login" component={Login}/>
         <Route path="review" component={ReviewsByUser}/>
