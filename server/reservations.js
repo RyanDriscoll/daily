@@ -42,6 +42,13 @@ router.get('/seller/:userId', (req, res, next) => {
     })
 })
 
+// get all reservations for a product
+router.get('/:productId', (req, res, next) => {
+    Reservation.findAll({where: {product_id: req.params.productId}})
+    .then(reservations => res.send(reservations))
+    .catch(next);
+})
+
 
 //update the reservation order number (to next available number) and status (to completed)
 router.put('/', (req, res, next) =>{
