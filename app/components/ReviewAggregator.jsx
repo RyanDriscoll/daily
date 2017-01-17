@@ -8,8 +8,9 @@ import ReactStars from 'react-stars'
 
 
 export default function Review(props) {
+  console.log("RA", props)
     let ratings = props.ratings;
-
+    console.log("RATINGS>>>>>>", ratings)
     let totalStars = ratings.reduce((initial, rating) => initial + rating.stars, 0);
     let averageRating = totalStars / ratings.length;
 

@@ -2,7 +2,8 @@ import React,{Component} from 'react'
 import store from '../store'
 import {Link} from 'react-router'
 import Reservation from './Reservation'
-
+import {getProductReview} from 'APP/app/reducers/products'
+import ProductReview from './ProductReview.jsx'
 
 
 /*-----products component-----*/
@@ -32,6 +33,7 @@ export const ProductView = (props) => {
                     </div>
                   </h5>
                   <Reservation />
+                  <ProductReview/>
                   </div>
                 </div>
               </div>

@@ -26,6 +26,7 @@ import PostProduct from './components/PostProduct'
 
 import {getProducts} from './reducers/products'
 import {getSingleProduct} from './reducers/products'
+import {getProductReview} from './reducers/products'
 
 
 
@@ -41,12 +42,16 @@ const ExampleApp = connect(
 )
 
 const onProductsEnter = (nextRouterState)=>{
+
   store.dispatch(getProducts())
+
+
 }
 
 const onProductEnter=nextRouterState=>{
   const productId = nextRouterState.params.productId;
   store.dispatch(getSingleProduct(productId))
+    store.dispatch(getProductReview(productId))
 }
 
 render (
@@ -76,5 +81,3 @@ render (
   </Provider>,
   document.getElementById('main')
 )
-
-

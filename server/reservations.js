@@ -19,6 +19,28 @@ router.param('userId', (req, res, next) => {
     })
 });
 
+
+router.get('/', (req, res, next) => {
+	return Reservation.findAll()
+		.then(reservations => {
+			res.json(reservations)
+		})
+		.catch(next)
+})
+
+
+
+
+router.get('/test/:reservationId', (req, res, next)=>{
+  let reservationId = req.params.reservationId
+  console.log("RESERVE ID", reservationId)
+  Reservation.getSellerAndProduct(reservationId)
+  .then(reservation => {
+    console.log("RESEVER", reservation)
+    res.json(reservation)})
+})
+
+
 /* get all reservations as renter */
 router.get('/renter/:userId', (req, res, next) => {
    Reservation.findAll({
@@ -80,4 +102,3 @@ router.post('/', (req, res, next) => {
 })
 
 module.exports = router;
-
