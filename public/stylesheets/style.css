@@ -41,7 +41,7 @@ sidebar {
   top: 50px;
   padding: 0 !important;
   background: #303030;
-  height: calc(500vh - 50px);
+  height: calc(100vh - 50px);
   width: inherit;
   overflow-y: auto;
   border-right: 2px solid #555;
@@ -67,10 +67,23 @@ sidebar {
 
 }
 
+
 .reservationView {
   padding-top: 150px;
 }
 
 .cartImage{
   width: 75%
+}
+
+
+.orderComplete{
+  padding-top: 150px;
+}
+
+#reservation-submit {
+  display: inline-block;
+  width: 50%;
+  height: 48px;
+  border-radius: 0px;
 }

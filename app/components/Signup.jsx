@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import {browserHistory} from 'react-router';
+import {login} from 'APP/app/reducers/auth'
+
 
 class Signup extends Component{
     constructor(props){
@@ -86,6 +88,7 @@ class Signup extends Component{
         }
 
         axios.post('/api/users', user)
+        .then(() => this.props.login(this.state.email, this.state.password))
 
         this.setState({
             firstName: '',
@@ -106,7 +109,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-
+        login: function(username, password){
+            dispatch(login(username, password));
+        }
     }
 }
 

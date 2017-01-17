@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const Product = require('APP/db/models/product')
+const Review = require('APP/db/models/review')
+const Reservation = require('APP/db/models/reservation')
 
 
 router.get('/', (req, res, next) => {
@@ -19,12 +21,14 @@ router.post('/', (req, res, next) => {
 
 router.get('/:productId', (req, res, next) => {
 	let productId = req.params.productId
+	console.log("productID", productId)
 	return Product.findById(productId)
-		.then(products => {
-			res.json(products)
+		.then(product => {
+			res.json(product)
 		})
 		.catch(next)
 })
+
 
 /*get all products of user */
 router.get('/users/:userId', (req, res, next) => {
@@ -50,5 +54,21 @@ router.delete('/:productId', (req, res, next) => {
 });
 
 
-module.exports = router
+router.get('/:productId/reviews', (req, res, next) => {
+	let productId = req.params.productId
+	console.log("productID", productId)
+	return Reservation.findAll({
+		where:{
+			product_id: productId},
+			include: [{model: Review, as: "sellerReview"}]
+		})
+		.then(reservation => {
+			console.log("PRODUCTS WITH RESERVATION", reservation)
+			res.json(reservation)
+		})
+		.catch(next)
+})
 
+
+
+module.exports = router
