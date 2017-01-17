@@ -29,8 +29,8 @@ class Reservation extends Component {
         }
         else{user = 'guest'};
         return(
-            <div>
-                <div>Reservation</div>
+            <div className="col-xs-4">
+                <h1>Reservation</h1>
                 <form id="new-reservation-form" className="form-group" style={{marginTop: '20px'}} onSubmit={e => {
                     e.preventDefault();
                     const res = {
