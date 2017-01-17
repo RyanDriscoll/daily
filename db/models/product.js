@@ -13,7 +13,11 @@ const Product = db.define('products', {
   zip: Sequelize.STRING,
   price: Sequelize.DECIMAL,
   end_date: Sequelize.DATEONLY,
-  img_url: Sequelize.STRING
+  img_url: Sequelize.STRING,
+  active: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true
+  }
 
 });
 

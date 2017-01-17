@@ -24,6 +24,10 @@ export default function ({userId, isAdmin})  {
                                 <span className="nav-link"> Pending Reviews </span>
                                 </li></Link>
 
+                                <Link to={`/userProfile/${userId}/postedProducts`} style={{textDecoration:'none'}}><li className="profile-nav-item"><i className="ion-android-star-outline nav-icon"></i>
+                                <span className="nav-link"> Posted Products</span>
+                                </li></Link>
+
                                 {isAdmin ?
                                 <Link to={`/userProfile/${userId}/categoriesAdmin`} style={{textDecoration:'none'}}><li className="profile-nav-item"><i className="ion-person-add nav-icon"></i>
                                 <span className="nav-link"> Categories Management </span>
