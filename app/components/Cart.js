@@ -23,14 +23,25 @@ class Cart extends Component{
                 }>
                     <div>
                         <div>
-                            <div className="col-md-5"> Product ID</div>
-                            <div className="col-md-5"> Reservation Date</div>
+                            <div className="col-md-4"> Product Photo</div>
+                            <div className="col-md-3"> Product Name</div>
+                            <div className="col-md-3"> Reservation Date</div>
                         </div>
                         {this.props.cart.map(reservation => {
                             return(
-                                <div key={reservation.id}>
-                                    <div className="col-md-5">{reservation.product_id}</div>
-                                    <div className="col-md-5">{reservation.date.slice(0, 10)}</div>
+                                <div key={reservation.id} className="row">
+                                        {this.props.products.map(product => {
+                                            if (product.id === reservation.product_id) {return (
+                                                <div key={product.id}>
+                                                    <div className="col-md-4">
+                                                        <img className='cartImage' src={product.img_url}/>
+                                                    </div>
+                                                    <div className="col-md-3">{product.name}</div>
+                                                </div>
+                                            )}}
+                                        )}
+                                    <div className="col-md-3">{reservation.date.slice(0, 10)}</div>
+                                    <br></br>
                                 </div>
                                 )
 
@@ -61,7 +72,8 @@ class Cart extends Component{
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        cart: state.reservations.cart
+        cart: state.reservations.cart,
+        products: state.products.allProducts
     };
 }
 
