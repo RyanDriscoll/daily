@@ -73,6 +73,7 @@ const mapStateToProps = (state, ownProps) => {
     const { userInfo, rentedTransactions, soldTransactions,
         pendingRentTransactions, pendingSellTransactions, rentingRatings, sellingRatings,
     pendingAsRenterReview, pendingAsSellerReview } = state.userProfile;
+    const { categories } = state.categories;
     return {
         userInfo,
         rentedTransactions,
@@ -82,7 +83,8 @@ const mapStateToProps = (state, ownProps) => {
         rentingRatings,
         sellingRatings,
         pendingAsRenterReview,
-        pendingAsSellerReview
+        pendingAsSellerReview,
+        categories
 
     };
 }

@@ -21,9 +21,9 @@ router.param('userId', (req, res, next) => {
 
 /* post a rating */
 router.post('/', (req, res, next) => {
-    const { reservationId, stars, text, type } = req.body;
+    const { productId, reservationId, stars, text, type } = req.body;
   Promise.all([Reservation.findById(reservationId),
-            Review.create({stars:stars, text:text})])
+            Review.create({stars:stars, text:text, product_id: productId})])
    .then(([reservation, review]) => {
        console.log('TYPE:', type);
        if(type==='sellerReview'){

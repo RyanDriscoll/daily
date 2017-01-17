@@ -15,7 +15,12 @@ const Product = db.define('products', {
   zip: Sequelize.STRING,
   price: Sequelize.INTEGER,
   end_date: Sequelize.DATEONLY,
-  img_url: Sequelize.STRING
+  img_url: Sequelize.STRING,
+  active: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true
+  }
+
 },
   {
     classMethods: {
@@ -23,6 +28,7 @@ const Product = db.define('products', {
       return  Product.findAll({where:
           {id:id},
           include: [{model: Review}]
+
 
         })
       }

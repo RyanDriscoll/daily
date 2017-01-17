@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router'
 
-export default function ({userId})  {
+export default function ({userId, isAdmin})  {
     return (
             <div className="profile-nav-container">
                         <nav className="profile-nav">
@@ -23,12 +23,25 @@ export default function ({userId})  {
                                 <Link to={`/userProfile/${userId}/pendingReviews`} style={{textDecoration:'none'}}><li className="profile-nav-item"><i className="ion-android-star-outline nav-icon"></i>
                                 <span className="nav-link"> Pending Reviews </span>
                                 </li></Link>
-                                <Link style={{textDecoration:'none'}}><li className="profile-nav-item"><i className="ion-person-add nav-icon"></i>
+
+                                <Link to={`/userProfile/${userId}/postedProducts`} style={{textDecoration:'none'}}><li className="profile-nav-item"><i className="ion-android-star-outline nav-icon"></i>
+                                <span className="nav-link"> Posted Products</span>
+                                </li></Link>
+
+                                {isAdmin ?
+                                <Link to={`/userProfile/${userId}/categoriesAdmin`} style={{textDecoration:'none'}}><li className="profile-nav-item"><i className="ion-person-add nav-icon"></i>
                                 <span className="nav-link"> Categories Management </span>
                                 </li></Link>
-                                 <Link style={{textDecoration:'none'}}><li className="profile-nav-item"><i className="ion-person-add nav-icon"></i>
+                                : null }
+
+                                {isAdmin ?
+                                 <Link to={`/userProfile/${userId}/usersAdmin`} style={{textDecoration:'none'}}><li className="profile-nav-item"><i className="ion-person-add nav-icon"></i>
                                 <span className="nav-link"> User Management </span>
                                 </li></Link>
+                                : null }
+
+
+
                             </ul>
                         </nav>
         </div>
