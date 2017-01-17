@@ -5,6 +5,7 @@ const api = module.exports = require('express').Router()
 
 api
   .get('/heartbeat', (req, res) => res.send({ok: true,}))
+  .use('/users', require('./users'))
   .use('/auth', require('./auth'))
   .use('/categories', require('./categories'))
   .use('/products', require('./products'))
