@@ -4,7 +4,7 @@ import ReactStars from 'react-stars'
 
 export default function Review(props) {
     let ratings = props.ratings;
-    let size = props.size;
+    let size = props.size || 24;
 
     let totalStars = ratings.reduce((initial, rating) => initial + rating.stars, 0);
     let averageRating = totalStars / ratings.length;
