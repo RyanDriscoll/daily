@@ -65,27 +65,20 @@ export const clearCart = (cart) => {
 
 
 
->>>>>>> master
 const reducer = (state = initialState, action) => {
   let newState = Object.assign({}, state)
 	switch (action.type) {
 		case RECEIVE_RESERVATION:
-<<<<<<< HEAD
-      newState.cart.push(action.reservation)
-      break;
+        newState.cart.push(action.reservation)
+        break;
     case RECEIVE_BLOCKED_DAYS:
-      newState.blockedDays = newState.blockedDays.concat(action.blockedDays)
-      console.log("newState",newState)
-      break;
-=======
-            newState.cart.push(action.reservation)
-            break;
-        case CLEAR_CART:
-            newState.cart=[];
-            break;
->>>>>>> master
+        newState.blockedDays = newState.blockedDays.concat(action.blockedDays)
+        break;
+    case CLEAR_CART:
+        newState.cart=[];
+        break;
     default:
-      return state;
+        return state;
 	}
 	return newState;
 }
