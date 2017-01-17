@@ -30,7 +30,7 @@ class SingleReviewContainer extends Component {
     }
 
     handleSubmit(e){
-        if(this.state.text.length < 10){
+        if(this.state.text.length <= 10){
             alert('Your review is too short, please write a longer review');
         }
         else {
@@ -39,6 +39,7 @@ class SingleReviewContainer extends Component {
                 reservationId: this.props.transaction.id,
                 stars: this.state.stars,
                 text: this.state.text,
+                productId: this.props.transaction.product.id,
             type: this.props.type}, this.props.userInfo.id);
         }
     }

@@ -29,4 +29,5 @@ Reservation.belongsTo(Review, { as: 'renterReview'})
 Product.hasMany(Review)
 
 
+
 module.exports = {User, Product, Category, Reservation, Review}

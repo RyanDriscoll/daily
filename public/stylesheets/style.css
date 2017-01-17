@@ -80,3 +80,10 @@ sidebar {
 .orderComplete{
   padding-top: 150px;
 }
+
+#reservation-submit {
+  display: inline-block;
+  width: 50%;
+  height: 48px;
+  border-radius: 0px;
+}
