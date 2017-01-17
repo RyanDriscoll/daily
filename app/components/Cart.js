@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import {browserHistory} from 'react-router';
 import {clearCart} from '../reducers/reservation'
 
@@ -18,7 +17,7 @@ class Cart extends Component{
                 <h3>Here is your cart </h3>
                 <form id="new-cart-form" className="form-group" style={{marginTop: '20px'}} onSubmit={e => {
                     this.confirmPurchase(e);
-                    browserHistory.push('/products');
+                    browserHistory.push('/orderComplete');
                     }
                 }>
                     <div>
@@ -64,7 +63,6 @@ class Cart extends Component{
     confirmPurchase(e){
         e.preventDefault();
         let cart = this.props.cart
-        // axios.put('/api/reservations', cart)
         this.props.clearCart(cart);
     }
 
