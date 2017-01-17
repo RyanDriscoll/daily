@@ -34,7 +34,7 @@ const mapStateToProps = (state, ownProps) => {
         review: [{
             id: 2,
             stars: 2,
-            text: 'Not Great',
+
             reservation_id: 1
         }]
     };
@@ -49,4 +49,3 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReviewsByUser);
-
