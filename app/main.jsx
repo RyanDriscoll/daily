@@ -23,7 +23,6 @@ import PostedProducts from './components/userProfile/PostedProducts.jsx';
 
 import Sidebar from './components/Sidebar'
 import ProductsView from './components/ProductsView'
-import ReviewsByUser from './components/ReviewsByUser'
 import ProductView from './components/ProductView'
 import PostProduct from './components/PostProduct'
 import {getProducts} from './reducers/products'
@@ -81,7 +80,6 @@ render (
           <Route path="usersAdmin" component={UsersAdmin}/>
         </Route>
         <Route path="login" component={Login}/>
-        <Route path="review" component={ReviewsByUser}/>
         <Route path="post" component={PostProduct}/>
         <Route path="cart" component={Cart}/>
         <Route path="orderComplete" component={OrderComplete}/>

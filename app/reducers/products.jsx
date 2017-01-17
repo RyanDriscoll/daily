@@ -25,6 +25,8 @@ export const receiveProductRatings = (ratings)=>{
   }
 }
 
+
+
 const RECEIVE_PRODUCT = 'RECEIVE_PRODUCT'
 
 /*-----action-creator single products-----*/
@@ -110,7 +112,7 @@ export const getProductReview = (productId)=>{
       return response.data})
     .then(reviews=>{
       let newReviews = reviews.map(reviewObj=>{
-        return reviewObj.sellerReview
+        return reviewObj
       })
       return dispatch(receiveProductRatings(newReviews))
     })

@@ -3,6 +3,7 @@ const router = express.Router()
 const Product = require('APP/db/models/product')
 const Review = require('APP/db/models/review')
 const Reservation = require('APP/db/models/reservation')
+const User = require('APP/db/models/user')
 
 
 router.get('/', (req, res, next) => {
@@ -58,7 +59,7 @@ router.get('/:productId/reviews', (req, res, next) => {
 	return Reservation.findAll({
 		where:{
 			product_id: productId},
-			include: [{model: Review, as: "sellerReview"}]
+			include: [{model: Review, as: "renterReview"}, {model: User, as: 'seller'}, {model: User, as: 'renter'}]
 		})
 		.then(reservation => {
 			res.json(reservation)
