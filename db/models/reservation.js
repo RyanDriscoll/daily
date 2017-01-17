@@ -27,6 +27,11 @@ const Reservation = db.define('reservations', {
       pendingReservation: function() {
         return this.status === 'completed' && this.date > Date.now();
       }
+    },
+    classMethods: {
+      getLargestOrderNumber: function(){
+        return Reservation.max('order')
+      }
     }
   });
 

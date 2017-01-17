@@ -2,7 +2,7 @@ import axios from 'axios'
 import store from '../store'
 
 const initialState = {
-    allReservations: []
+    cart: []
 }
 const RECEIVE_RESERVATION = 'RECEIVE_RESERVATION';
 
@@ -27,7 +27,7 @@ const reducer = (state = initialState, action) => {
   let newState = Object.assign({}, state)
 	switch (action.type) {
 		case RECEIVE_RESERVATION:
-      newState.allReservations.push(action.reservation)
+      newState.cart.push(action.reservation)
       break;
     default:
       return state;

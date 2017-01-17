@@ -2,8 +2,14 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { SingleDatePicker } from 'react-dates';
 import { makeReservation } from '../reducers/reservation';
+<<<<<<< HEAD
 import axios from 'axios';
 import moment from 'moment';
+=======
+import { store } from '../store';
+import {browserHistory} from 'react-router';
+
+>>>>>>> master
 
 class Reservation extends Component {
     constructor(props) {
@@ -56,7 +62,10 @@ class Reservation extends Component {
                         status: 'carted'
                     }
                     this.props.addReservation(res, user, product)
+                        window.setTimeout(function(){
+                            browserHistory.push('/cart')}, 1000)
                     }
+
                 }>
 
                     <SingleDatePicker

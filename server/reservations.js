@@ -49,6 +49,26 @@ router.get('/:productId', (req, res, next) => {
     .catch(next);
 })
 
+
+//update the reservation order number (to next available number) and status (to completed)
+router.put('/', (req, res, next) =>{
+    Reservation.getLargestOrderNumber()
+        .then((order)=> {
+            order++
+            req.body.forEach( reservation =>
+                Reservation.findOne({where: {id: reservation.id}})
+                    .then(singleReservation => {
+                        singleReservation.update({status: 'completed'})
+                        singleReservation.update({order: order})
+                    })
+            )
+        })
+        .then(res.sendStatus(200))
+        .catch(next)
+
+})
+
+
 // post a reservation
 router.post('/', (req, res, next) => {
     Reservation.create(req.body.reservation)
