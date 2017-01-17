@@ -2,20 +2,44 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { SingleDatePicker } from 'react-dates';
 import { makeReservation } from '../reducers/reservation';
-import { store } from '../store';
+import axios from 'axios';
+import moment from 'moment';
 
 class Reservation extends Component {
     constructor(props) {
         super(props)
         this.state = {
             date: null,
-            focused: false
+            focused: false,
+            blockedDays: []
         }
     }
 
+    componentDidMount() {
+        // this.getBlockedDays();
+        console.log('$$$$$$$$',this.props.selectedProduct.id);
+        axios.get(`/api/reservations/${this.props.selectedProduct.id.toString()}`)
+        .then(response => response.data)
+        .then(reservations => reservations.map(res => moment(res.date)))
+        .then(dateArr => {
+            console.log(dateArr)
+            this.setState({
+            blockedDays: dateArr
+        })})
+    }
+
+    // getBlockedDays() {
+        // axios.get(`/api/reservations`)
+        // .then(response => response.data)
+        // .then(reservations => reservations.map(res => res.date))
+        // .then(dateArr => {
+        //     console.log(dateArr)
+        //     this.setState({
+        //     blockedDays: dateArr
+        // })})
+    // }
+
     render(){
-        console.log('props', this.props);
-        console.log('state', this.state);
         const product = this.props.selectedProduct;
         let user;
         if(this.props.auth){
@@ -41,6 +65,7 @@ class Reservation extends Component {
                         focused={this.state.focused}
                         onDateChange={(date) => { this.setState({ date }); }}
                         onFocusChange={({ focused }) => { this.setState({ focused }); }}
+                        // isDayBlocked={(day) => }
                     />
                     <button id="reservation-submit" type="submit" form="new-reservation-form" value="Submit"
                             className="btn btn-primary btn-block">
