@@ -5,6 +5,8 @@ const chalk = require('chalk');
 const { User , Reservation , Review , Product } = require('APP/db/models');
 
 const router = require('express').Router();
+const stripe = require('stripe')("sk_test_BQokikJOvBiI2HlWgH4olfQ2");
+
 
 
 router.param('userId', (req, res, next) => {
@@ -64,11 +66,37 @@ router.get('/seller/:userId', (req, res, next) => {
     })
 })
 
+
+router.post('/save-stripe-token', (req, res, next) => {
+
+// Get the payment token submitted by the form:
+    const token = req.body.body["id"];
+
+// Charge the user's card:
+    const charge = stripe.charges.create({
+        amount: 1000,
+        currency: "usd",
+        description: "Example charge",
+        source: token,
+    }, function (err, charge) {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            res.send(charge);
+        }
+    });
+
+})
+
+
+
 // get all reservations for a product
 router.get('/:productId', (req, res, next) => {
     Reservation.findAll({where: {product_id: req.params.productId}})
     .then(reservations => res.send(reservations))
     .catch(next);
+
 })
 
 

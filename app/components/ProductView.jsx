@@ -16,31 +16,24 @@ export const ProductView = (props) => {
 
     <div className="container ">
       <div className='main'>
-          <div className="ProductsView">
-            <div className="col-xs-6" >
-              <h1>{product.name && product.name.toUpperCase()}</h1>
-              <img src={product.img_url}/>
-              <div className='caption'>
-                <div className="name and price">
-                  <div>
-                  <h5>
-                    <div className="caption">
-                      <span>{product.address}</span>
-                    </div>
-                    <div className="caption">
-                      <span>{product.city}, {product.state} {product.zip}</span>
-                    </div>
-                    <div>
-                      <span>{product.description}</span>
-                    </div>
-                  </h5>
-                  <ProductReview/>
-                  <ReviewsWithText/>
-                  </div>
-                </div>
-              </div>
+
+        <div className="">
+          <div className="col-xs-6 product-view" >
+            <h1>{product.name && product.name.toUpperCase()}</h1>
+            <img id="single-product" src={product.img_url}/>
+            <div className="prodInfo">
+              <h3>${product.price} per day</h3>
             </div>
-                  <Reservation />
+            <div className="prodInfo">
+              <h3>{product.address}<br/>{product.city}, {product.state} {product.zip}</h3>
+
+            </div>
+            <div className="prodInfo">
+              <h3>{product.description}</h3>
+                  <ReviewsWithText/>
+            </div>
+          </div>
+          <Reservation />
         </div>
       </div>
     </div>

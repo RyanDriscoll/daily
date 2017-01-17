@@ -82,14 +82,30 @@ async function newCreateSeeds() {
         name: 'Cars'
     }
 
+    const category3 = {
+        name: 'Household Goods'
+    }
+
+    const category4 = {
+        name: 'Land'
+    }
+
+    const category5 = {
+        name: 'Storage Space'
+    }
+
     const [u1, u2] = await Promise.all([
         User.create(user1),
         User.create(user2)
     ])
 
-    const [c1, c2] = await Promise.all([
+    const [c1, c2, c3, c4, c5] = await Promise.all([
         Category.create(category1),
-        Category.create(category2)
+        Category.create(category2),
+        Category.create(category3),
+        Category.create(category4),
+        Category.create(category5),
+
     ])
 
     const p1 = await Product.create(product1)
@@ -115,6 +131,9 @@ async function newCreateSeeds() {
 
     res1.setSellerReview(sellerreview1);
     res1.setRenterReview(renterreview1);
+
+    renterreview1.setProduct(p1);
+    sellerreview1.setProduct(p1);
 }
 
 
