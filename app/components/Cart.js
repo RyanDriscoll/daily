@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import {browserHistory} from 'react-router';
+import {clearCart} from '../reducers/reservation'
+
 
 class Cart extends Component{
     constructor(props){
         super(props)
-
         this.confirmPurchase = this.confirmPurchase.bind(this);
-
     }
 
 
@@ -64,7 +64,8 @@ class Cart extends Component{
     confirmPurchase(e){
         e.preventDefault();
         let cart = this.props.cart
-        axios.put('/api/reservations', cart)
+        // axios.put('/api/reservations', cart)
+        this.props.clearCart(cart);
     }
 
 }
@@ -81,7 +82,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-
+        clearCart: function(cart){
+            dispatch(clearCart(cart))
+        }
     }
 }
 
