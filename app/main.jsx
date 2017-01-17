@@ -15,18 +15,17 @@ import TransactionHistory from './components/userProfile/TransactionHistory.jsx'
 import FutureReservations from './components/userProfile/FutureReservations.jsx';
 import AggregateRatings from './components/userProfile/AggregateRatings.jsx';
 import PendingReviews from './components/userProfile/PendingReviews.jsx';
-
 import Sidebar from './components/Sidebar'
 import ProductsView from './components/ProductsView'
-
 import ReviewsByUser from './components/ReviewsByUser'
-
 import ProductView from './components/ProductView'
 import PostProduct from './components/PostProduct'
-
 import {getProducts} from './reducers/products'
 import {getSingleProduct} from './reducers/products'
 import {getProductReview} from './reducers/products'
+import {getReservationsForProduct} from './reducers/reservation'
+import OrderComplete from './components/OrderComplete'
+
 
 
 
@@ -51,7 +50,9 @@ const onProductsEnter = (nextRouterState)=>{
 const onProductEnter=nextRouterState=>{
   const productId = nextRouterState.params.productId;
   store.dispatch(getSingleProduct(productId))
-    store.dispatch(getProductReview(productId))
+  store.dispatch(getProductReview(productId))
+  store.dispatch(getReservationsForProduct(productId))
+
 }
 
 render (
@@ -74,6 +75,7 @@ render (
         <Route path="review" component={ReviewsByUser}/>
         <Route path="post" component={PostProduct}/>
         <Route path="cart" component={Cart}/>
+        <Route path="orderComplete" component={OrderComplete}/>
 
       <IndexRedirect to="/products" />
       </Route>
