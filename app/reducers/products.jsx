@@ -2,7 +2,8 @@ import axios from 'axios'
 
 const initialState = {
     allProducts: [],
-    selectedProduct: {}
+    selectedProduct: {},
+    selectedProductRatings:[]
 }
 const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS'
 
@@ -14,6 +15,15 @@ export const receiveProducts = (products) =>{
   }
 }
 
+
+const RECEIVE_PRODUCT_RATINGS = 'RECEIVE_PRODUCT_RATINGS'
+
+export const receiveProductRatings = (ratings)=>{
+  return {
+    type: RECEIVE_PRODUCT_RATINGS,
+    ratings: ratings
+  }
+}
 
 const RECEIVE_PRODUCT = 'RECEIVE_PRODUCT'
 
@@ -65,6 +75,25 @@ export const postProduct = (product) => {
 }
 
 
+export const getProductReview = (productId)=>{
+  return dispatch => {
+  axios.get(`/api/products/${productId}/reviews`)
+    .then(response=>{
+      console.log("RDATA", response.data)
+      return response.data})
+    .then(reviews=>{
+      console.log("IN GPR", reviews)
+      let newReviews = reviews.map(reviewObj=>{
+        return reviewObj.sellerReview
+      })
+      console.log("REVIEW ARR", reviews)
+      return dispatch(receiveProductRatings(newReviews))
+    })
+      .catch(err => console.error(err))
+}
+}
+
+
 /*-----products reducer-----*/
 export default function(state = initialState, action) {
     let newState = Object.assign({}, state)
@@ -75,6 +104,10 @@ export default function(state = initialState, action) {
 
         case RECEIVE_PRODUCT:
           newState.selectedProduct = action.product
+          break;
+
+        case RECEIVE_PRODUCT_RATINGS:
+          newState.selectedProductRatings = action.ratings
           break;
 
         default:
