@@ -6,6 +6,8 @@ import axios from 'axios';
 import moment from 'moment';
 import { store } from '../store';
 import {browserHistory} from 'react-router';
+import ProductReview from './ProductReview.jsx'
+
 
 
 class Reservation extends Component {
@@ -22,7 +24,6 @@ class Reservation extends Component {
     render(){
         const product = this.props.selectedProduct;
         const blockedDays = this.props.blockedDays;
-        console.log(blockedDays);
         let user;
         if(this.props.auth){
             user = this.props.auth;
@@ -30,7 +31,8 @@ class Reservation extends Component {
         else{user = 'guest'};
         return(
             <div className="col-xs-4">
-                <h1>Reservation</h1>
+                <ProductReview />
+                <h1>Make a Reservation</h1>
                 <form id="new-reservation-form" className="form-group" style={{marginTop: '20px'}} onSubmit={e => {
                     e.preventDefault();
                     const res = {
@@ -51,12 +53,8 @@ class Reservation extends Component {
                         onDateChange={(date) => { this.setState({ date }); }}
                         onFocusChange={({ focused }) => { this.setState({ focused }); }}
                         isDayBlocked={(day) => {
-                            // console.log(moment(day).isSame(moment('2017-01-18'), 'day'), day)
                             for (let i = 0; i < blockedDays.length; i++){
-                                    // console.log('same day', day, blockedDays[i]);
-                                    // console.log('is it blocked?', day.isSame(blockedDays[i]._i.slice(0,10), 'day'), blockedDays[i]._i.slice(0, 10))
                                 if (day.isSame(blockedDays[i], 'day')) {
-
                                     return true;
                                 }
                             }

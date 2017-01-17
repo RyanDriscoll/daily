@@ -21,7 +21,7 @@ class ProductReview extends Component{
 
     return (
          <div>
-            <div> Product Rating </div>
+            <h1> Product Rating </h1>
             {productRatings.length === 0 ?
                 <div> No Ratings available </div> :
                  <ReviewAggregator ratings={productRatings}/>
