@@ -12,11 +12,7 @@ class ProductReview extends Component{
 
 
 
-    // let productRatings = props.productRatings.map(rating=> {
-    //     return rating.sellerReview;
-    // })
     render(){
-      console.log("THIS PROPS", this.props)
       let productRatings = this.props.ratings
 
     return (

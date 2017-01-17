@@ -79,14 +79,11 @@ export const getProductReview = (productId)=>{
   return dispatch => {
   axios.get(`/api/products/${productId}/reviews`)
     .then(response=>{
-      console.log("RDATA", response.data)
       return response.data})
     .then(reviews=>{
-      console.log("IN GPR", reviews)
       let newReviews = reviews.map(reviewObj=>{
         return reviewObj.sellerReview
       })
-      console.log("REVIEW ARR", reviews)
       return dispatch(receiveProductRatings(newReviews))
     })
       .catch(err => console.error(err))

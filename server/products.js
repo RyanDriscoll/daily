@@ -21,7 +21,6 @@ router.post('/', (req, res, next) => {
 
 router.get('/:productId', (req, res, next) => {
 	let productId = req.params.productId
-	console.log("productID", productId)
 	return Product.findById(productId)
 		.then(product => {
 			res.json(product)
@@ -31,14 +30,12 @@ router.get('/:productId', (req, res, next) => {
 
 router.get('/:productId/reviews', (req, res, next) => {
 	let productId = req.params.productId
-	console.log("productID", productId)
 	return Reservation.findAll({
 		where:{
 			product_id: productId},
 			include: [{model: Review, as: "sellerReview"}]
 		})
 		.then(reservation => {
-			console.log("PRODUCTS WITH RESERVATION", reservation)
 			res.json(reservation)
 		})
 		.catch(next)

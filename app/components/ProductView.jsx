@@ -10,7 +10,7 @@ import ProductReview from './ProductReview.jsx'
 export const ProductView = (props) => {
 
   const product = props.product
-  console.log("PRODUCT", product)
+
   return (
 
     <div className="container ">
@@ -51,14 +51,14 @@ import {getSingleProduct} from '../reducers/products'
 
 
 const mapStateToProps = (state, ownProps) => {
-  console.log("MSTP SINGLE", state)
+
   return {
     product: state.products.selectedProduct
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) =>{
-  console.log("MDTP PROPS")
+
   return {
     addProduct: productId=>
      (dispatch=>(dispatch(getSingleProduct(productId))))
