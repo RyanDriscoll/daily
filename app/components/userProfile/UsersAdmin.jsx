@@ -26,9 +26,9 @@ class UsersAdmin extends Component {
 
     render(){
         return (
-            <div>
+            <div className="user-admin-container">
                     <table className = "table table-striped">
-                        <caption>Users</caption>
+                        <caption className="user-admin-caption">Users</caption>
                         <thead>
                             <tr>
                                 <th>First Name</th>
@@ -50,14 +50,14 @@ class UsersAdmin extends Component {
                                     {user.isAdmin ?
                                     <button
                                     onClick={()=> {this.toggleAdminStatus(user.id)}}
-                                    className="btn btn-info"> Admin </button>
+                                    className="btn btn-info admin-button"> Admin </button>
                                     :
                                     <button
                                     onClick={()=> {this.toggleAdminStatus(user.id)}}
                                     className="btn btn-default"> User </button>}
                                     <button
                                     onClick={()=> {this.deleteUser(user.id)}}
-                                    className="btn btn-danger">
+                                    className="btn btn-danger delete-button">
                                     X</button>
                                     </td>
                                 </tr>

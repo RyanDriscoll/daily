@@ -52,9 +52,6 @@ class UserProfile extends Component {
         return (
             <div className="col-md-10 user-profile-page container container-fluid" style={{padding: 0}}>
                 <div className="header-section">
-                    <div className="profile-img-container">
-                        <img className="profile-img"></img>
-                    </div>
                     <div className="profile-header-quote">
                         Welcome back to Dai.ly
                     </div>

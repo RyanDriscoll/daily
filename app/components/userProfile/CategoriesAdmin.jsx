@@ -33,11 +33,9 @@ class CategoriesAdmin extends Component {
 
     render(){
         return (
-            <div>
-                <input onChange={this.inputCategory} style={{width:400}}/>
-                <button onClick={this.addCategory} className="btn btn-primary">Add</button>
+            <div className="category-admin-container">
                     <table className = "table table-striped">
-                        <caption>Categories</caption>
+                        <caption className="category-caption">Categories</caption>
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -61,6 +59,8 @@ class CategoriesAdmin extends Component {
                         </tbody>
 
                     </table>
+                     <input onChange={this.inputCategory} style={{width:400}}/>
+                <button onClick={this.addCategory} className="btn btn-primary">Add</button>
             </div>
         )
     }
