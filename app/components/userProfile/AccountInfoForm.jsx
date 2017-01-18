@@ -7,6 +7,12 @@ export default function(props)  {
         <div className="account-info-container">
                     <form className="form-group account-info-form" onSubmit={props.handleSubmit}>
                             <div className="account-info-title">Account Information</div>
+
+                             <label className="form-label"> E-mail </label>
+                            <input name="email" type="email" className="form-control"
+                            defaultValue={props.userInfo.email}
+                            onChange={props.handleInput} readOnly></input>
+
                             <label className="form-label"> First Name </label>
                             <input name="firstName" type="text"
                             className="form-control"
@@ -34,10 +40,6 @@ export default function(props)  {
                             className="form-control"
                             onChange={props.handleInput}></input>
 
-                            <label className="form-label"> E-mail </label>
-                            <input name="email" type="email" className="form-control"
-                            defaultValue={props.userInfo.email}
-                            onChange={props.handleInput} readOnly></input>
 
                             <button type="submit" className="btn btn-primary account-info-button">Save Changes</button>
                     </form>

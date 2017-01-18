@@ -59,7 +59,7 @@ class SingleReviewContainer extends Component {
                                     </div>
                                     <label> Rating </label>
                                     <span>
-                                     <select value={this.state.stars} className="ratingSelector" onChange={this.selectRating}>
+                                     <select value={this.state.stars} className="ratings-selector" onChange={this.selectRating}>
                                         <option value={1}>1</option>
                                         <option value={2}>2</option>
                                         <option value={3}>3</option>

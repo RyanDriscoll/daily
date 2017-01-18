@@ -50,14 +50,14 @@ class UsersAdmin extends Component {
                                     {user.isAdmin ?
                                     <button
                                     onClick={()=> {this.toggleAdminStatus(user.id)}}
-                                    className="btn btn-info"> Admin </button>
+                                    className="btn btn-info admin-button"> Admin </button>
                                     :
                                     <button
                                     onClick={()=> {this.toggleAdminStatus(user.id)}}
                                     className="btn btn-default"> User </button>}
                                     <button
                                     onClick={()=> {this.deleteUser(user.id)}}
-                                    className="btn btn-danger">
+                                    className="btn btn-danger delete-button">
                                     X</button>
                                     </td>
                                 </tr>

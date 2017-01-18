@@ -52,9 +52,8 @@
     margin: 0;
     background-color: #3a3f41;
     color: #fff;
-    font-family: "Helvetica Neue";
-    font-size: 12px;
-    font-weight: 300;
+    font-size: 6px;
+
 }
 
 
@@ -89,9 +88,9 @@
 
 .nav-link {
     height: 100%;
-    margin-left: 25px;
+    margin-left: 15px;
     font-size: 22px;
-    color: lightgray;
+    color: #337ab7;
 }
 
 .ion-document {
@@ -195,6 +194,22 @@
 .user-admin-caption {
     font-size: 30px;
 }
+
+/* pending ratings */
+.ratings-selector {
+    margin: 10px  0;
+    width: 100px;
+}
+
+.admin-button {
+    margin-right: 15px;
+}
+
+.delete-button {
+    margin-right: 15px;
+}
+
+
 
 
 
