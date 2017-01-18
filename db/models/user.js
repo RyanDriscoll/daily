@@ -39,6 +39,10 @@ const User = db.define('users', {
 
 
         )
+    },
+    usernameTrunc: function(){
+      let truncLast = this.lastName.slice(0,1)
+      return  this.firstName+this.last + truncLast
     }
   }
 })

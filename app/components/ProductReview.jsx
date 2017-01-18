@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import store from '../store'
 import axios from 'axios';
-import ReviewAggregator from './ReviewAggregator.jsx';
+import ProductReviewAggregator from './ProductReviewAggregator.jsx';
 import { connect } from 'react-redux';
 import {getProductReview} from 'APP/app/reducers/products'
 
@@ -12,11 +12,8 @@ class ProductReview extends Component{
 
 
 
-    // let productRatings = props.productRatings.map(rating=> {
-    //     return rating.sellerReview;
-    // })
     render(){
-      console.log("THIS PROPS", this.props)
+      console.log("aggregate props", this.props)
       let productRatings = this.props.ratings
 
     return (
@@ -24,7 +21,7 @@ class ProductReview extends Component{
             <h1> Product Rating </h1>
             {productRatings.length === 0 ?
                 <div> No Ratings available </div> :
-                 <ReviewAggregator ratings={productRatings}/>
+                 <ProductReviewAggregator ratings={productRatings}/>
              }
 
         </div>
